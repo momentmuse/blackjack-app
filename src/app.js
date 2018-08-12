@@ -1,6 +1,6 @@
 console.log('app.js is running!')
 
-const dealerHand = [
+let dealerHand = [
     {
         card: 'six',
         value: 6
@@ -11,7 +11,7 @@ const dealerHand = [
     }
 ];
 
-const playerHand = [    
+let playerHand = [    
     {
         card: 'two',
         value: 2
@@ -34,7 +34,7 @@ const accessCardsInHand = (hand) => {
     return cardsInHandArr;
 }
 
-const deckValues = [
+let deckValues = [
     {
         card: 'ace of clubs',
         value: 1 || 11,
@@ -314,8 +314,14 @@ const calculateHandTotal = (hand) => {
     //should this include the logic for ace's value = 1 || 11?
 };
 
-const hitHand = () => {
-    playerHand.push(deckValues[Math.floor(Math.random() * 52)])
+const addOneCard = (hand) => {
+    //abstracted code to add one card to hand
+    //pushes random spliced item from deckValues into hand
+    hand.push(deckValues.splice([Math.floor(Math.random() * 52)]), 1);
+};
+
+const hitHand = (playerHand) => {
+    addOneCard(playerHand);
     if(calculateHandTotal(playerHand) > 21) {
         alert('Bust! You lose!')
     }

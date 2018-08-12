@@ -258,8 +258,14 @@ var calculateHandTotal = function calculateHandTotal(hand) {
     //should this include the logic for ace's value = 1 || 11?
 };
 
-var hitHand = function hitHand() {
-    playerHand.push(deckValues[Math.floor(Math.random() * 52)]);
+var addOneCard = function addOneCard(hand) {
+    //abstracted code to add one card to hand
+    //pushes random spliced item from deckValues into hand
+    hand.push(deckValues.splice([Math.floor(Math.random() * 52)]), 1);
+};
+
+var hitHand = function hitHand(playerHand) {
+    addOneCard(playerHand);
     if (calculateHandTotal(playerHand) > 21) {
         alert('Bust! You lose!');
     }
