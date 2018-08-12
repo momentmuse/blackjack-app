@@ -12,6 +12,7 @@ var playerHand = [{
     card: 'three',
     value: 3
 }];
+
 var dealerHand = [{
     card: 'six',
     value: 6
@@ -125,6 +126,16 @@ var playerTemplate = React.createElement(
         'p',
         null,
         'This is some more text'
+    ),
+    React.createElement(
+        'button',
+        { id: 'hit-button', 'class': 'button' },
+        'Hit!'
+    ),
+    React.createElement(
+        'button',
+        { id: 'stand-button', 'class': 'button' },
+        'Stand!'
     )
 );
 var playerRoot = document.getElementById('player');

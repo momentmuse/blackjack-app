@@ -14,6 +14,7 @@ const playerHand = [
     value: 3
 }
 ];
+
 const dealerHand = [
     {
         card: 'six',
@@ -127,6 +128,8 @@ const playerTemplate = (
     <div>
         <h1>Your Hand: {accessCardsInHand(playerHand)}</h1>
         <p>This is some more text</p>
+        <button id="hit-button" class="button">Hit!</button>
+        <button id="stand-button" class="button">Stand!</button>
     </div>
 );
 const playerRoot = document.getElementById('player');
