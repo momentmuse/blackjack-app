@@ -242,9 +242,9 @@ var deckValues = [{
 }];
 
 var initiateGame = function initiateGame() {
-    hitHand();
-    hitHand();
-    standHand();
+    addOneCard(playerHand);
+    addOneCard(playerHand);
+    addOneCard(dealerHand);
 };
 
 var calculateHandTotal = function calculateHandTotal(hand) {

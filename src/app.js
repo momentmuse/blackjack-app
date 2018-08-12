@@ -300,9 +300,9 @@ let deckValues = [
 ];
 
 const initiateGame = () => {
-    hitHand();
-    hitHand();
-    standHand();
+    addOneCard(playerHand);
+    addOneCard(playerHand);
+    addOneCard(dealerHand);
 }
 
 const calculateHandTotal = (hand) => {
