@@ -322,6 +322,10 @@ const addOneCard = (hand) => {
     hand.push(deckValues.splice(Math.floor(Math.random() * 52), 1)[0]);
 };
 
+const evaluateScore = () => {
+    //move all conditional logic for alerts here
+};
+
 const hitHand = (playerHand) => {
     addOneCard(playerHand);
     if(calculateHandTotal(playerHand) > 21) {
