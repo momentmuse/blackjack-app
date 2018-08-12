@@ -1,7 +1,37 @@
 console.log('app.js is running!')
 
-const playerHand = [];
-const dealerHand = [];
+const playerHand = [    
+{
+    card: 'ace',
+    value: 1 || 11
+},
+{
+    card: 'two',
+    value: 2
+},
+{
+    card: 'three',
+    value: 3
+}
+];
+const dealerHand = [
+    {
+        card: 'six',
+        value: 6
+    },
+    {
+        card: 'seven',
+        value: 7
+    }
+];
+
+const accessCardsInHand = (hand) => {
+    let cardsInHandArr = [];
+    for (let i = 0; i < hand.length; i++) {
+        cardsInHandArr.push(hand[i].card);
+    }
+    return cardsInHandArr;
+}
 
 const deckValues = [
     {
@@ -87,7 +117,7 @@ const renderCardImage = () => {
 
 const dealerTemplate = (
     <div>
-        <h1>This is the dealer template</h1>
+        <h1>Dealer: {accessCardsInHand(dealerHand)}</h1>
         <p>This is some text</p>
     </div>
 );
@@ -95,14 +125,15 @@ const dealerRoot = document.getElementById('dealer');
 
 const playerTemplate = (
     <div>
-        <h1>This is the player one template</h1>
+        <h1>Your Hand: {accessCardsInHand(playerHand)}</h1>
         <p>This is some more text</p>
     </div>
 );
 const playerRoot = document.getElementById('player');
 
-ReactDOM.render(dealerTemplate, dealerRoot);
-ReactDOM.render(playerTemplate, playerRoot);
+const renderApp = () => {
+    ReactDOM.render(dealerTemplate, dealerRoot);
+    ReactDOM.render(playerTemplate, playerRoot);
+};
 
-
-const renderApp = () => {};
+renderApp();

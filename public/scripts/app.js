@@ -2,8 +2,31 @@
 
 console.log('app.js is running!');
 
-var playerHand = [];
-var dealerHand = [];
+var playerHand = [{
+    card: 'ace',
+    value: 1 || 11
+}, {
+    card: 'two',
+    value: 2
+}, {
+    card: 'three',
+    value: 3
+}];
+var dealerHand = [{
+    card: 'six',
+    value: 6
+}, {
+    card: 'seven',
+    value: 7
+}];
+
+var accessCardsInHand = function accessCardsInHand(hand) {
+    var cardsInHandArr = [];
+    for (var i = 0; i < hand.length; i++) {
+        cardsInHandArr.push(hand[i].card);
+    }
+    return cardsInHandArr;
+};
 
 var deckValues = [{
     card: 'ace',
@@ -78,7 +101,8 @@ var dealerTemplate = React.createElement(
     React.createElement(
         'h1',
         null,
-        'This is the dealer template'
+        'Dealer: ',
+        accessCardsInHand(dealerHand)
     ),
     React.createElement(
         'p',
@@ -94,7 +118,8 @@ var playerTemplate = React.createElement(
     React.createElement(
         'h1',
         null,
-        'This is the player one template'
+        'Your Hand: ',
+        accessCardsInHand(playerHand)
     ),
     React.createElement(
         'p',
@@ -104,7 +129,9 @@ var playerTemplate = React.createElement(
 );
 var playerRoot = document.getElementById('player');
 
-ReactDOM.render(dealerTemplate, dealerRoot);
-ReactDOM.render(playerTemplate, playerRoot);
+var renderApp = function renderApp() {
+    ReactDOM.render(dealerTemplate, dealerRoot);
+    ReactDOM.render(playerTemplate, playerRoot);
+};
 
-var renderApp = function renderApp() {};
+renderApp();
