@@ -21,14 +21,6 @@ var playerHand = [{
     value: 10
 }];
 
-var accessCardsInHand = function accessCardsInHand(hand) {
-    var cardsInHandArr = [];
-    for (var i = 0; i < hand.length; i++) {
-        cardsInHandArr.push(hand[i].card);
-    }
-    return cardsInHandArr;
-};
-
 var deckValues = [{
     card: 'ace of clubs',
     value: 1 || 11,
@@ -249,6 +241,14 @@ var initiateGame = function initiateGame() {
     //add some logic to refresh the deckValues?
 };
 
+var accessCardsInHand = function accessCardsInHand(hand) {
+    var cardsInHandArr = [];
+    for (var i = 0; i < hand.length; i++) {
+        cardsInHandArr.push(hand[i].card);
+    }
+    return cardsInHandArr;
+};
+
 var calculateHandTotal = function calculateHandTotal(hand) {
     var valueInHandArr = [];
     for (var i = 0; i < hand.length; i++) {
@@ -261,7 +261,6 @@ var calculateHandTotal = function calculateHandTotal(hand) {
 };
 
 var addOneCard = function addOneCard(hand) {
-    //abstracted code to add one card to hand
     //pushes random spliced item from deckValues into hand
     //index[0] because splice returns an array
     hand.push(deckValues.splice(Math.floor(Math.random() * 52), 1)[0]);
@@ -277,16 +276,29 @@ var hitHand = function hitHand(playerHand) {
     //also, renderApp
     renderApp();
 };
+
 var standHand = function standHand() {
-    if (calculateHandTotal(dealerHand) <= 16) {
+    while (calculateHandTotal(dealerHand) <= 16) {
         addOneCard(dealerHand);
+        //add time delay betwen each addOneCard?
+        renderApp();
+    }
+    if (calculateHandTotal(dealerHand) > 21) {
+        alert('Dealer bust! You win!');
+    } else if (calculateHandTotal(dealerHand) >= 17) {
+        if (calculateHandTotal(dealerHand) > calculateHandTotal(playerHand)) {
+            alert('Dealer wins!');
+        } else if (calculateHandTotal(dealerHand) < calculateHandTotal(playerHand)) {
+            alert('You win!');
+        } else {
+            alert('It\'s a draw!');
+        }
     }
     //conditionals based on calculateHandTotal
     //if <=16, repeat standHand (Recursion?)
     //if playerHand total > dealerHand total, return YOU WIN!
     //else return YOU LOSE!
     //also, renderApp
-    renderApp();
 };
 
 var renderCardImage = function renderCardImage() {

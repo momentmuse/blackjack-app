@@ -26,14 +26,6 @@ let playerHand = [
     }
 ];
 
-const accessCardsInHand = (hand) => {
-    let cardsInHandArr = [];
-    for (let i = 0; i < hand.length; i++) {
-        cardsInHandArr.push(hand[i].card);
-    }
-    return cardsInHandArr;
-}
-
 let deckValues = [
     {
         card: 'ace of clubs',
@@ -307,6 +299,14 @@ const initiateGame = () => {
 //add some logic to refresh the deckValues?
 }
 
+const accessCardsInHand = (hand) => {
+    let cardsInHandArr = [];
+    for (let i = 0; i < hand.length; i++) {
+        cardsInHandArr.push(hand[i].card);
+    }
+    return cardsInHandArr;
+}
+
 const calculateHandTotal = (hand) => {
     let valueInHandArr = [];
     for (let i = 0; i < hand.length; i++) {
@@ -317,7 +317,6 @@ const calculateHandTotal = (hand) => {
 };
 
 const addOneCard = (hand) => {
-    //abstracted code to add one card to hand
     //pushes random spliced item from deckValues into hand
     //index[0] because splice returns an array
     hand.push(deckValues.splice(Math.floor(Math.random() * 52), 1)[0]);
@@ -333,16 +332,29 @@ const hitHand = (playerHand) => {
     //also, renderApp
     renderApp();
 };
+
 const standHand = () => {
-    if (calculateHandTotal(dealerHand) <= 16) {
+    while (calculateHandTotal(dealerHand) <= 16) {
         addOneCard(dealerHand);
+        //add time delay betwen each addOneCard?
+        renderApp();
+    }
+    if (calculateHandTotal(dealerHand) > 21) {
+        alert('Dealer bust! You win!');
+    } else if (calculateHandTotal(dealerHand) >= 17) {
+        if (calculateHandTotal(dealerHand) > calculateHandTotal(playerHand)) {
+            alert('Dealer wins!');
+        } else if (calculateHandTotal(dealerHand) < calculateHandTotal(playerHand)) {
+            alert('You win!');
+        } else {
+            alert('It\'s a draw!');
+        }
     }
     //conditionals based on calculateHandTotal
     //if <=16, repeat standHand (Recursion?)
     //if playerHand total > dealerHand total, return YOU WIN!
     //else return YOU LOSE!
     //also, renderApp
-    renderApp();
 };
 
 const renderCardImage = () => {
