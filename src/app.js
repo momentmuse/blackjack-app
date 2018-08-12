@@ -317,7 +317,7 @@ const calculateHandTotal = (hand) => {
 const addOneCard = (hand) => {
     //abstracted code to add one card to hand
     //pushes random spliced item from deckValues into hand
-    hand.push(deckValues.splice([Math.floor(Math.random() * 52)]), 1);
+    hand.push(deckValues.splice(Math.floor(Math.random() * 52), 1));
 };
 
 const hitHand = (playerHand) => {
