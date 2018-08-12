@@ -310,6 +310,11 @@ var dealerTemplate = React.createElement(
     'div',
     null,
     React.createElement(
+        'button',
+        { id: 'play-button', className: 'button', onClick: initiateGame },
+        'Play?'
+    ),
+    React.createElement(
         'h1',
         null,
         'Dealer: ',

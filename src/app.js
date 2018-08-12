@@ -364,6 +364,7 @@ const renderCardImage = () => {
 
 const dealerTemplate = (
     <div>
+        <button id="play-button" className="button" onClick={initiateGame}>Play?</button>
         <h1>Dealer: {accessCardsInHand(dealerHand)}</h1>
         <p>Total Value: {calculateHandTotal(dealerHand)}</p>
     </div>
