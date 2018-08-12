@@ -30,44 +30,163 @@ var accessCardsInHand = function accessCardsInHand(hand) {
 };
 
 var deckValues = [{
-    card: 'ace',
+    card: 'ace of clubs',
     value: 1 || 11
 }, {
-    card: 'two',
+    card: 'two of clubs',
     value: 2
 }, {
-    card: 'three',
+    card: 'three of clubs',
     value: 3
 }, {
-    card: 'four',
+    card: 'four of clubs',
     value: 4
 }, {
-    card: 'five',
+    card: 'five of clubs',
     value: 5
 }, {
-    card: 'six',
+    card: 'six of clubs',
     value: 6
 }, {
-    card: 'seven',
+    card: 'seven of clubs',
     value: 7
 }, {
-    card: 'eight',
+    card: 'eight of clubs',
     value: 8
 }, {
-    card: 'nine',
+    card: 'nine of clubs',
     value: 9
 }, {
-    card: 'ten',
+    card: 'ten of clubs',
     value: 10
 }, {
-    card: 'jack',
+    card: 'jack of clubs',
     value: 10
 }, {
-    card: 'queen',
+    card: 'queen of clubs',
     value: 10
 }, {
-    card: 'king',
+    card: 'king of clubs',
     value: 10
+}, {
+    card: 'ace of hearts',
+    value: 1 || 11
+}, {
+    card: 'two of hearts',
+    value: 2
+}, {
+    card: 'three of hearts',
+    value: 3
+}, {
+    card: 'four of hearts',
+    value: 4
+}, {
+    card: 'five of hearts',
+    value: 5
+}, {
+    card: 'six of hearts',
+    value: 6
+}, {
+    card: 'seven of hearts',
+    value: 7
+}, {
+    card: 'eight of hearts',
+    value: 8
+}, {
+    card: 'nine of hearts',
+    value: 9
+}, {
+    card: 'ten of hearts',
+    value: 10
+}, {
+    card: 'jack of hearts',
+    value: 10
+}, {
+    card: 'queen of hearts',
+    value: 10
+}, {
+    card: 'king of hearts',
+    value: 10
+}, {
+    card: 'ace of spades',
+    value: 1 || 11
+}, {
+    card: 'two of spades',
+    value: 2
+}, {
+    card: 'three of spades',
+    value: 3
+}, {
+    card: 'four of spades',
+    value: 4
+}, {
+    card: 'five of spades',
+    value: 5
+}, {
+    card: 'six of spades',
+    value: 6
+}, {
+    card: 'seven of spades',
+    value: 7
+}, {
+    card: 'eight of spades',
+    value: 8
+}, {
+    card: 'nine of spades',
+    value: 9
+}, {
+    card: 'ten of spades',
+    value: 10
+}, {
+    card: 'jack of spades',
+    value: 10
+}, {
+    card: 'queen of spades',
+    value: 10
+}, {
+    card: 'king of spades',
+    value: 10
+}, {
+    card: 'ace of diamonds',
+    value: 1 || 11
+}, {
+    card: 'two of diamonds',
+    value: 2
+}, {
+    card: 'three of diamonds',
+    value: 3
+}, {
+    card: 'four of diamonds',
+    value: 4
+}, {
+    card: 'five of diamonds',
+    value: 5
+}, {
+    card: 'six of diamonds',
+    value: 6
+}, {
+    card: 'seven of diamonds',
+    value: 7
+}, {
+    card: 'eight of diamonds',
+    value: 8
+}, {
+    card: 'nine of diamonds',
+    value: 9
+}, {
+    card: 'ten of diamonds',
+    value: 10
+}, {
+    card: 'jack of diamonds',
+    value: 10
+}, {
+    card: 'queen of diamonds',
+    value: 10
+}, {
+    card: 'king of diamonds',
+    value: 10
+    //note: you might have to populate the whole deck
+    //instead of simply identifying and pushing into the player or dealer hand, it may be better to splice out of deckValues array and push into dealer or playerHand, because then that would represent the card probability more accurately
 }];
 
 var calculateHandTotal = function calculateHandTotal(hand) {
@@ -82,7 +201,7 @@ var calculateHandTotal = function calculateHandTotal(hand) {
 };
 
 var hitHand = function hitHand() {
-    //playerHand.push(deckValues[Math.random(0-12)])
+    playerHand.push(deckValues[Math.floor(Math.random() * 52)]);
     //conditionals based on calculateHandTotal
     //if > 21, return YOU LOSE!
 };
