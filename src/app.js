@@ -1,20 +1,5 @@
 console.log('app.js is running!')
 
-const playerHand = [    
-{
-    card: 'ace',
-    value: 1 || 11
-},
-{
-    card: 'two',
-    value: 2
-},
-{
-    card: 'three',
-    value: 3
-}
-];
-
 const dealerHand = [
     {
         card: 'six',
@@ -24,6 +9,21 @@ const dealerHand = [
         card: 'seven',
         value: 7
     }
+];
+
+const playerHand = [    
+{
+    card: 'two',
+    value: 2
+},
+{
+    card: 'three',
+    value: 3
+},
+{
+    card: 'ten',
+    value: 10
+}
 ];
 
 const accessCardsInHand = (hand) => {
@@ -90,9 +90,12 @@ const deckValues = [
 ];
 
 
-const calculateHandTotal = () => {
-    //iterate over hand, reduce values of all items
-    //how do you .reduce on a key on an array of objects?
+const calculateHandTotal = (hand) => {
+    let valueInHandArr = [];
+    for (let i = 0; i < hand.length; i++) {
+        valueInHandArr.push(hand[i].value);
+    }
+    return valueInHandArr.reduce((a,b) => a+b);
     //should this include the logic for ace's value = 1 || 11?
 };
 
@@ -119,7 +122,7 @@ const renderCardImage = () => {
 const dealerTemplate = (
     <div>
         <h1>Dealer: {accessCardsInHand(dealerHand)}</h1>
-        <p>This is some text</p>
+        <p>Total Value: {calculateHandTotal(dealerHand)}</p>
     </div>
 );
 const dealerRoot = document.getElementById('dealer');
@@ -127,7 +130,7 @@ const dealerRoot = document.getElementById('dealer');
 const playerTemplate = (
     <div>
         <h1>Your Hand: {accessCardsInHand(playerHand)}</h1>
-        <p>This is some more text</p>
+        <p>Total Value: {calculateHandTotal(playerHand)}</p>
         <button id="hit-button" className="button">Hit!</button>
         <button id="stand-button" className="button">Stand!</button>
     </div>

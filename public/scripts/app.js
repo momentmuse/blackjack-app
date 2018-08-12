@@ -2,23 +2,23 @@
 
 console.log('app.js is running!');
 
-var playerHand = [{
-    card: 'ace',
-    value: 1 || 11
-}, {
-    card: 'two',
-    value: 2
-}, {
-    card: 'three',
-    value: 3
-}];
-
 var dealerHand = [{
     card: 'six',
     value: 6
 }, {
     card: 'seven',
     value: 7
+}];
+
+var playerHand = [{
+    card: 'two',
+    value: 2
+}, {
+    card: 'three',
+    value: 3
+}, {
+    card: 'ten',
+    value: 10
 }];
 
 var accessCardsInHand = function accessCardsInHand(hand) {
@@ -70,9 +70,14 @@ var deckValues = [{
     value: 10
 }];
 
-var calculateHandTotal = function calculateHandTotal() {
-    //iterate over hand, reduce values of all items
-    //how do you .reduce on a key on an array of objects?
+var calculateHandTotal = function calculateHandTotal(hand) {
+    var valueInHandArr = [];
+    for (var i = 0; i < hand.length; i++) {
+        valueInHandArr.push(hand[i].value);
+    }
+    return valueInHandArr.reduce(function (a, b) {
+        return a + b;
+    });
     //should this include the logic for ace's value = 1 || 11?
 };
 
@@ -108,7 +113,8 @@ var dealerTemplate = React.createElement(
     React.createElement(
         'p',
         null,
-        'This is some text'
+        'Total Value: ',
+        calculateHandTotal(dealerHand)
     )
 );
 var dealerRoot = document.getElementById('dealer');
@@ -125,7 +131,8 @@ var playerTemplate = React.createElement(
     React.createElement(
         'p',
         null,
-        'This is some more text'
+        'Total Value: ',
+        calculateHandTotal(playerHand)
     ),
     React.createElement(
         'button',
