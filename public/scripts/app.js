@@ -1,13 +1,13 @@
 'use strict';
 
-console.log('script.js is running!');
+console.log('app.js is running!');
 
 var dealerTemplate = React.createElement(
   'p',
   null,
   'This is the dealer template'
 );
-var dealerRoot = document.getElementsById('dealer');
+var dealerRoot = document.getElementById('dealer');
 
 var playerOneTemplate = React.createElement(
   'p',
