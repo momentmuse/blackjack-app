@@ -237,14 +237,16 @@ var deckValues = [{
     card: 'king of diamonds',
     value: 10,
     src: 'images/cards/KD.png'
-    //note: you might have to populate the whole deck
-    //instead of simply identifying and pushing into the player or dealer hand, it may be better to splice out of deckValues array and push into dealer or playerHand, because then that would represent the card probability more accurately
+    //when the app is running a game, the deckValues should be persistent
+    //ie, spliced items should remain removed from deckValues
+    //when you start a new game (initiateGame), deckValues should refresh to the full 52-card deck
 }];
 
 var initiateGame = function initiateGame() {
     addOneCard(playerHand);
     addOneCard(playerHand);
     addOneCard(dealerHand);
+    //add some logic to refresh the deckValues?
 };
 
 var calculateHandTotal = function calculateHandTotal(hand) {
@@ -261,7 +263,8 @@ var calculateHandTotal = function calculateHandTotal(hand) {
 var addOneCard = function addOneCard(hand) {
     //abstracted code to add one card to hand
     //pushes random spliced item from deckValues into hand
-    hand.push(deckValues.splice(Math.floor(Math.random() * 52), 1));
+    //index[0] because splice returns an array
+    hand.push(deckValues.splice(Math.floor(Math.random() * 52), 1)[0]);
 };
 
 var hitHand = function hitHand(playerHand) {
@@ -271,13 +274,19 @@ var hitHand = function hitHand(playerHand) {
     }
     //conditionals based on calculateHandTotal
     //if > 21, return YOU LOSE!
+    //also, renderApp
+    renderApp();
 };
 var standHand = function standHand() {
-    //dealerHand.push(deckValues[Math.random(0-12)])
+    if (calculateHandTotal(dealerHand) <= 16) {
+        addOneCard(dealerHand);
+    }
     //conditionals based on calculateHandTotal
     //if <=16, repeat standHand (Recursion?)
     //if playerHand total > dealerHand total, return YOU WIN!
     //else return YOU LOSE!
+    //also, renderApp
+    renderApp();
 };
 
 var renderCardImage = function renderCardImage() {

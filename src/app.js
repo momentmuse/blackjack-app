@@ -295,14 +295,16 @@ let deckValues = [
         value: 10,
         src: 'images/cards/KD.png'
     }
-//note: you might have to populate the whole deck
-//instead of simply identifying and pushing into the player or dealer hand, it may be better to splice out of deckValues array and push into dealer or playerHand, because then that would represent the card probability more accurately
+//when the app is running a game, the deckValues should be persistent
+//ie, spliced items should remain removed from deckValues
+//when you start a new game (initiateGame), deckValues should refresh to the full 52-card deck
 ];
 
 const initiateGame = () => {
     addOneCard(playerHand);
     addOneCard(playerHand);
     addOneCard(dealerHand);
+//add some logic to refresh the deckValues?
 }
 
 const calculateHandTotal = (hand) => {
@@ -317,7 +319,8 @@ const calculateHandTotal = (hand) => {
 const addOneCard = (hand) => {
     //abstracted code to add one card to hand
     //pushes random spliced item from deckValues into hand
-    hand.push(deckValues.splice(Math.floor(Math.random() * 52), 1));
+    //index[0] because splice returns an array
+    hand.push(deckValues.splice(Math.floor(Math.random() * 52), 1)[0]);
 };
 
 const hitHand = (playerHand) => {
@@ -327,13 +330,19 @@ const hitHand = (playerHand) => {
     }
     //conditionals based on calculateHandTotal
     //if > 21, return YOU LOSE!
+    //also, renderApp
+    renderApp();
 };
 const standHand = () => {
-    //dealerHand.push(deckValues[Math.random(0-12)])
+    if (calculateHandTotal(dealerHand) <= 16) {
+        addOneCard(dealerHand);
+    }
     //conditionals based on calculateHandTotal
     //if <=16, repeat standHand (Recursion?)
     //if playerHand total > dealerHand total, return YOU WIN!
     //else return YOU LOSE!
+    //also, renderApp
+    renderApp();
 };
 
 const renderCardImage = () => {
