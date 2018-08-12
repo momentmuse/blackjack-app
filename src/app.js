@@ -128,8 +128,8 @@ const playerTemplate = (
     <div>
         <h1>Your Hand: {accessCardsInHand(playerHand)}</h1>
         <p>This is some more text</p>
-        <button id="hit-button" class="button">Hit!</button>
-        <button id="stand-button" class="button">Stand!</button>
+        <button id="hit-button" className="button">Hit!</button>
+        <button id="stand-button" className="button">Stand!</button>
     </div>
 );
 const playerRoot = document.getElementById('player');

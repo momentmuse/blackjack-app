@@ -129,12 +129,12 @@ var playerTemplate = React.createElement(
     ),
     React.createElement(
         'button',
-        { id: 'hit-button', 'class': 'button' },
+        { id: 'hit-button', className: 'button' },
         'Hit!'
     ),
     React.createElement(
         'button',
-        { id: 'stand-button', 'class': 'button' },
+        { id: 'stand-button', className: 'button' },
         'Stand!'
     )
 );
