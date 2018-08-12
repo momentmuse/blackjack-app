@@ -293,10 +293,10 @@ let deckValues = [
 ];
 
 const initiateGame = () => {
+//add some logic to refresh the deckValues?
     addOneCard(playerHand);
     addOneCard(playerHand);
     addOneCard(dealerHand);
-//add some logic to refresh the deckValues?
 }
 
 const accessCardsInHand = (hand) => {
@@ -327,9 +327,6 @@ const hitHand = (playerHand) => {
     if(calculateHandTotal(playerHand) > 21) {
         alert('Bust! You lose!')
     }
-    //conditionals based on calculateHandTotal
-    //if > 21, return YOU LOSE!
-    //also, renderApp
     renderApp();
 };
 
@@ -350,10 +347,6 @@ const standHand = () => {
             alert('It\'s a draw!');
         }
     }
-    //conditionals based on calculateHandTotal
-    //if <=16, repeat standHand (Recursion?)
-    //if playerHand total > dealerHand total, return YOU WIN!
-    //else return YOU LOSE!
     //also, renderApp
 };
 
