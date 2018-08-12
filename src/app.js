@@ -1,10 +1,20 @@
 console.log('script.js is running!')
 
-const dealerTemplate = <p>This is the dealer template</p>;
+const dealerTemplate = (
+    <div>
+        <h1>This is the dealer template</h1>
+        <p>This is some text</p>
+    </div>
+);
 const dealerRoot = document.getElementById('dealer');
 
-const playerOneTemplate = <p>This is the player one template!</p>;
-const playerOneRoot = document.getElementById('playerOne');
+const playerTemplate = (
+    <div>
+        <h1>This is the player one template</h1>
+        <p>This is some more text</p>
+    </div>
+);
+const playerRoot = document.getElementById('player');
 
 ReactDOM.render(dealerTemplate, dealerRoot);
-ReactDOM.render(playerOneTemplate, playerOneRoot);
+ReactDOM.render(playerTemplate, playerRoot);

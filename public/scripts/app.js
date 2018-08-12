@@ -1,20 +1,38 @@
 'use strict';
 
-console.log('app.js is running!');
+console.log('script.js is running!');
 
 var dealerTemplate = React.createElement(
-  'p',
-  null,
-  'This is the dealer template'
+    'div',
+    null,
+    React.createElement(
+        'h1',
+        null,
+        'This is the dealer template'
+    ),
+    React.createElement(
+        'p',
+        null,
+        'This is some text'
+    )
 );
 var dealerRoot = document.getElementById('dealer');
 
-var playerOneTemplate = React.createElement(
-  'p',
-  null,
-  'This is the player one template!'
+var playerTemplate = React.createElement(
+    'div',
+    null,
+    React.createElement(
+        'h1',
+        null,
+        'This is the player one template'
+    ),
+    React.createElement(
+        'p',
+        null,
+        'This is some more text'
+    )
 );
-var playerOneRoot = document.getElementById('playerOne');
+var playerRoot = document.getElementById('player');
 
 ReactDOM.render(dealerTemplate, dealerRoot);
-ReactDOM.render(playerOneTemplate, playerOneRoot);
+ReactDOM.render(playerTemplate, playerRoot);
