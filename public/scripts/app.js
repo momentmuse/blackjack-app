@@ -46,6 +46,32 @@ var deckValues = [{
     value: 10
 }];
 
+var calculateHandTotal = function calculateHandTotal() {
+    //iterate over hand, reduce values of all items
+    //how do you .reduce on a key on an array of objects?
+    //should this include the logic for ace's value = 1 || 11?
+};
+
+var hitHand = function hitHand() {
+    //playerHand.push(deckValues[Math.random(0-12)])
+    //conditionals based on calculateHandTotal
+    //if > 21, return YOU LOSE!
+};
+var standHand = function standHand() {
+    //dealerHand.push(deckValues[Math.random(0-12)])
+    //conditionals based on calculateHandTotal
+    //if <=16, repeat standHand (Recursion?)
+    //if playerHand total > dealerHand total, return YOU WIN!
+    //else return YOU LOSE!
+};
+
+var renderCardImage = function renderCardImage() {
+    //iterate over hand (map or forEach)
+    //insert png based on item in array's value key
+    //value will select randomized suit card
+    //how to make sure there are no duplicate cards already rendered?? idk
+};
+
 var dealerTemplate = React.createElement(
     'div',
     null,
