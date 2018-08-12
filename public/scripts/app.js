@@ -202,6 +202,9 @@ var calculateHandTotal = function calculateHandTotal(hand) {
 
 var hitHand = function hitHand() {
     playerHand.push(deckValues[Math.floor(Math.random() * 52)]);
+    if (calculateHandTotal(playerHand) > 21) {
+        alert('Bust! You lose!');
+    }
     //conditionals based on calculateHandTotal
     //if > 21, return YOU LOSE!
 };
