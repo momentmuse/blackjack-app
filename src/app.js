@@ -374,8 +374,8 @@ const playerTemplate = (
     <div>
         <h1>Your Hand: {accessCardsInHand(playerHand)}</h1>
         <p>Total Value: {calculateHandTotal(playerHand)}</p>
-        <button id="hit-button" className="button">Hit!</button>
-        <button id="stand-button" className="button">Stand!</button>
+        <button id="hit-button" className="button" onClick={hitHand}>Hit!</button>
+        <button id="stand-button" className="button" onClick={standHand}>Stand!</button>
         <p>This is a test image: <img src={deckValues[0].src}></img></p>
     </div>
 );
