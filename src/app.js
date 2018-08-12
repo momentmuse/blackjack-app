@@ -297,6 +297,7 @@ const initiateGame = () => {
     addOneCard(playerHand);
     addOneCard(playerHand);
     addOneCard(dealerHand);
+    evaluateGameStatus();
 }
 
 const accessCardsInHand = (hand) => {
@@ -322,7 +323,7 @@ const addOneCard = (hand) => {
     hand.push(deckValues.splice(Math.floor(Math.random() * 52), 1)[0]);
 };
 
-const evaluateScore = () => {
+const evaluateGameStatus = () => {
     //move all conditional logic for alerts here
 };
 

@@ -239,6 +239,7 @@ var initiateGame = function initiateGame() {
     addOneCard(playerHand);
     addOneCard(playerHand);
     addOneCard(dealerHand);
+    evaluateGameStatus();
 };
 
 var accessCardsInHand = function accessCardsInHand(hand) {
@@ -266,7 +267,7 @@ var addOneCard = function addOneCard(hand) {
     hand.push(deckValues.splice(Math.floor(Math.random() * 52), 1)[0]);
 };
 
-var evaluateScore = function evaluateScore() {
+var evaluateGameStatus = function evaluateGameStatus() {
     //move all conditional logic for alerts here
 };
 
