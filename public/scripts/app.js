@@ -2,12 +2,15 @@
 
 console.log('the NEW app.js is running!');
 
+//declare game status and message and global variables
+var gameStatus = 'finished';
+var gameMessage = 'Click New Game to Start';
 var deckValues = [];
 var dealerHand = [];
 var playerHand = [];
-var gameStatus = 'finished';
-var gameMessage = 'Click New Game to Start';
 
+//function to refresh the deck values after they have been spliced during a game
+//an array of 52 objects with three keys: card, value, and img src
 var refreshDeck = function refreshDeck() {
     deckValues = [{
         card: 'ace of clubs',
@@ -220,6 +223,10 @@ var refreshDeck = function refreshDeck() {
     }];
 };
 
+//initiateGame function to be run on New Game button click
+//changes message and status
+//resets many of the global values (in case you click it after playing a game)
+//set up dealer and player hands and renders app
 var initiateGame = function initiateGame() {
     gameStatus = 'playing';
     gameMessage = 'Game in Progress';
@@ -234,6 +241,7 @@ var initiateGame = function initiateGame() {
 };
 
 var printCardsInHand = function printCardsInHand(hand) {
+    //only run if the user has clicked New Game, thus hand length is greater than 0
     if (hand.length > 0) {
         var cardsInHand = [];
         for (var i = 0; i < hand.length; i++) {
@@ -246,71 +254,69 @@ var printCardsInHand = function printCardsInHand(hand) {
     }
 };
 
-var renderCardImage = function renderCardImage() {
+var renderCardImages = function renderCardImages() {
     //iterate over objects in the hand array and inject src img into JSX
     //create an <img src=""></img> item that is pushed into JSX each time you addOneCard?
     //remember to resize the images before you render them!
 };
 
-var calculateHandTotal = function calculateHandTotal(hand) {
+var calculateTotalValue = function calculateTotalValue(hand) {
+    //only run if the user has clicked New Game, thus hand length is greater than 0
     if (hand.length > 0) {
         var valuesOfHand = [];
+        //iterates over array and pulls numbers from value of object, pushes into new array
         for (var i = 0; i < hand.length; i++) {
             valuesOfHand.push(hand[i].value);
         }
+        //reduce new array to find total value of hand
         return valuesOfHand.reduce(function (a, b) {
             return a + b;
         });
+        //else (if length of hand is !>0), return 0
     } else {
         return 0;
     }
 };
 
+//handles the rule in blackjack that an ace can be 11 || 1
 var checkAce = function checkAce(hand) {
+    //find first index of an object (card) whose value===11 (ace default value===11)
     var isThereAnAce = function isThereAnAce(card) {
         return card.value === 11;
     };
-    if (calculateHandTotal(hand) > 21 && hand.findIndex(isThereAnAce) >= 0) {
+    //if the total value of the hand is greater than 21 && an ace exists at an index (>=0)
+    if (calculateTotalValue(hand) > 21 && hand.findIndex(isThereAnAce) >= 0) {
+        //then hand[at that index]'s value should reassigned to === 1
         hand[hand.findIndex(isThereAnAce)].value = 1;
     }
 };
 
-var addOneCard = function addOneCard(hand) {
+var pushRandomCard = function pushRandomCard(hand) {
+    //splices object at random index of deckValues (so there are no card repeats), and pushes to hand
     hand.push(deckValues.splice(Math.floor(Math.random() * deckValues.length), 1)[0]);
+};
+
+var addOneCard = function addOneCard(hand) {
+    //calls both pushRandomCard and checkAce to evaluate ace value before rendering app
+    pushRandomCard(hand);
     checkAce(hand);
-    renderCardImage();
-};
-
-var hitHand = function hitHand() {
-    if (calculateHandTotal(playerHand) < 21) {
-        addOneCard(playerHand);
-        checkBust();
-        renderApp();
-    };
-};
-
-var standHand = function standHand() {
-    while (calculateHandTotal(dealerHand) <= 16) {
-        addOneCard(dealerHand);
-        //add time delay betwen each addOneCard?
-        //setInterval and setTimeout doesn't work
-    }
-    evaluateGameStatus();
-    renderApp();
 };
 
 var checkBust = function checkBust() {
-    if (calculateHandTotal(playerHand) > 21) {
+    //conditional logic to check if pressing hit resulted in a bust, thereby finishing game
+    if (calculateTotalValue(playerHand) > 21) {
         gameStatus = 'finished';
         gameMessage = 'Bust! You lose.';
     };
 };
 
 var evaluateGameStatus = function evaluateGameStatus() {
-    if (calculateHandTotal(dealerHand) > 21 || calculateHandTotal(dealerHand) < calculateHandTotal(playerHand)) {
+    //conditional logic to be run after stand finishes
+    //finishes the game and reassigns game message
+    if (calculateTotalValue(dealerHand) > 21 || calculateTotalValue(dealerHand) < calculateTotalValue(playerHand)) {
         gameStatus = 'finished';
         gameMessage = 'You win! Congratulations!';
-    } else if (calculateHandTotal(dealerHand) > calculateHandTotal(playerHand)) {
+    } else if (calculateTotalValue(dealerHand) > calculateTotalValue(playerHand)) {
         gameStatus = 'finished';
         gameMessage = 'You lose!';
     } else {
@@ -319,9 +325,32 @@ var evaluateGameStatus = function evaluateGameStatus() {
     }
 };
 
+var hitHand = function hitHand() {
+    //if there is no bust, clicking hit adds a card, checks for bust, and renders app
+    if (calculateTotalValue(playerHand) < 21) {
+        addOneCard(playerHand);
+        checkBust();
+        renderApp();
+    };
+};
+
+var standHand = function standHand() {
+    //while the value of dealer hand is <=16, dealer continues adding cards to hand
+    while (calculateTotalValue(dealerHand) <= 16) {
+        addOneCard(dealerHand);
+        //add time delay betwen each addOneCard?
+        //setInterval and setTimeout doesn't work
+    }
+    //evaluate game status and render app when while loop ceases
+    evaluateGameStatus();
+    renderApp();
+};
+
+//declaring root to attach JSX components
 var dealerRoot = document.getElementById('dealer');
 var playerRoot = document.getElementById('player');
 
+//React JSX components
 var renderApp = function renderApp() {
     var dealerTemplate = React.createElement(
         'div',
@@ -337,6 +366,13 @@ var renderApp = function renderApp() {
             'New Game'
         ),
         React.createElement(
+            'div',
+            { className: 'card-images' },
+            '\'',
+            renderCardImages(dealerHand),
+            '\''
+        ),
+        React.createElement(
             'h2',
             null,
             'Dealer Hand: ',
@@ -346,13 +382,20 @@ var renderApp = function renderApp() {
             'p',
             null,
             'Total Value: ',
-            calculateHandTotal(dealerHand)
+            calculateTotalValue(dealerHand)
         )
     );
 
     var playerTemplate = React.createElement(
         'div',
         null,
+        React.createElement(
+            'div',
+            { className: 'card-images' },
+            '\'',
+            renderCardImages(dealerHand),
+            '\''
+        ),
         React.createElement(
             'h2',
             null,
@@ -363,7 +406,7 @@ var renderApp = function renderApp() {
             'p',
             null,
             'Total Value: ',
-            calculateHandTotal(playerHand)
+            calculateTotalValue(playerHand)
         ),
         React.createElement(
             'button',

@@ -1,11 +1,14 @@
 console.log('the NEW app.js is running!')
 
+//declare game status and message and global variables
+let gameStatus = 'finished';
+let gameMessage = 'Click New Game to Start';
 let deckValues = [];
 let dealerHand = [];
 let playerHand = [];
-let gameStatus = 'finished';
-let gameMessage = 'Click New Game to Start';
 
+//function to refresh the deck values after they have been spliced during a game
+//an array of 52 objects with three keys: card, value, and img src
 const refreshDeck = () => {
     deckValues = [
         {
@@ -271,6 +274,10 @@ const refreshDeck = () => {
     ];
 };
 
+//initiateGame function to be run on New Game button click
+//changes message and status
+//resets many of the global values (in case you click it after playing a game)
+//set up dealer and player hands and renders app
 const initiateGame = () => {
     gameStatus = 'playing';
     gameMessage = 'Game in Progress';
@@ -285,6 +292,7 @@ const initiateGame = () => {
 }
 
 const printCardsInHand = (hand) => {
+//only run if the user has clicked New Game, thus hand length is greater than 0
     if (hand.length > 0) {
         let cardsInHand = [];
         for (let i = 0; i < hand.length; i++) {
@@ -297,67 +305,65 @@ const printCardsInHand = (hand) => {
     }
 };
 
-const renderCardImage = () => {
+const renderCardImages = () => {
     //iterate over objects in the hand array and inject src img into JSX
     //create an <img src=""></img> item that is pushed into JSX each time you addOneCard?
     //remember to resize the images before you render them!
 };
 
-const calculateHandTotal = (hand) => {
+const calculateTotalValue = (hand) => {
+//only run if the user has clicked New Game, thus hand length is greater than 0
     if (hand.length > 0) {
         let valuesOfHand = [];
+//iterates over array and pulls numbers from value of object, pushes into new array
         for (let i = 0; i < hand.length; i++) {
             valuesOfHand.push(hand[i].value);
         }
+//reduce new array to find total value of hand
         return valuesOfHand.reduce((a,b) => a+b);
+//else (if length of hand is !>0), return 0
     } else {
         return 0;
     }
 };
 
+//handles the rule in blackjack that an ace can be 11 || 1
 const checkAce = (hand) => {
+//find first index of an object (card) whose value===11 (ace default value===11)
     const isThereAnAce = ( card => card.value===11 );
-    if (calculateHandTotal(hand) > 21 && hand.findIndex(isThereAnAce) >= 0) {
+//if the total value of the hand is greater than 21 && an ace exists at an index (>=0)
+    if (calculateTotalValue(hand) > 21 && hand.findIndex(isThereAnAce) >= 0) {
+//then hand[at that index]'s value should reassigned to === 1
         hand[hand.findIndex(isThereAnAce)].value = 1;
     }
 };
 
-const addOneCard = (hand) => {
+const pushRandomCard = (hand) => {
+//splices object at random index of deckValues (so there are no card repeats), and pushes to hand
     hand.push(deckValues.splice(Math.floor(Math.random() * deckValues.length), 1)[0]);
+}
+
+const addOneCard = (hand) => {
+//calls both pushRandomCard and checkAce to evaluate ace value before rendering app
+    pushRandomCard(hand);
     checkAce(hand);
-    renderCardImage();
-};
-
-const hitHand = () => {
-    if (calculateHandTotal(playerHand) < 21) {
-        addOneCard(playerHand);
-        checkBust();
-        renderApp();
-    }; 
-};
-
-const standHand = () => {
-    while (calculateHandTotal(dealerHand) <= 16) {
-        addOneCard(dealerHand);
-        //add time delay betwen each addOneCard?
-        //setInterval and setTimeout doesn't work
-    }
-    evaluateGameStatus();
-    renderApp();
 };
 
 const checkBust = () => {
-    if (calculateHandTotal(playerHand) > 21) {
+//conditional logic to check if pressing hit resulted in a bust, thereby finishing game
+    if (calculateTotalValue(playerHand) > 21) {
         gameStatus = 'finished';
         gameMessage = 'Bust! You lose.'
     };
 };
 
 const evaluateGameStatus = () => {
-    if (calculateHandTotal(dealerHand) > 21 || calculateHandTotal(dealerHand) < calculateHandTotal(playerHand)) {
+//conditional logic to be run after stand finishes
+//finishes the game and reassigns game message
+    if (calculateTotalValue(dealerHand) > 21 || calculateTotalValue(dealerHand) < calculateTotalValue(playerHand)) {
         gameStatus = 'finished';
         gameMessage = 'You win! Congratulations!'
-    } else if (calculateHandTotal(dealerHand) > calculateHandTotal(playerHand)) {
+    } else if (calculateTotalValue(dealerHand) > calculateTotalValue(playerHand)) {
         gameStatus = 'finished';
         gameMessage = 'You lose!'
     } else {
@@ -366,23 +372,48 @@ const evaluateGameStatus = () => {
     }
 };
 
+const hitHand = () => {
+//if there is no bust, clicking hit adds a card, checks for bust, and renders app
+    if (calculateTotalValue(playerHand) < 21) {
+        addOneCard(playerHand);
+        checkBust();
+        renderApp();
+    }; 
+};
+
+const standHand = () => {
+//while the value of dealer hand is <=16, dealer continues adding cards to hand
+    while (calculateTotalValue(dealerHand) <= 16) {
+        addOneCard(dealerHand);
+        //add time delay betwen each addOneCard?
+        //setInterval and setTimeout doesn't work
+    }
+//evaluate game status and render app when while loop ceases
+    evaluateGameStatus();
+    renderApp();
+};
+
+//declaring root to attach JSX components
 const dealerRoot = document.getElementById('dealer');
 const playerRoot = document.getElementById('player');
 
+//React JSX components
 const renderApp = () => {
     const dealerTemplate = (
         <div>
             <h1>{gameMessage}</h1>
             <button id="play-button" className="button" onClick={initiateGame}>New Game</button>
+            <div className="card-images">'{renderCardImages(dealerHand)}'</div>
             <h2>Dealer Hand: {printCardsInHand(dealerHand)}</h2>
-            <p>Total Value: {calculateHandTotal(dealerHand)}</p>
+            <p>Total Value: {calculateTotalValue(dealerHand)}</p>
         </div>
     );
 
     const playerTemplate = (
         <div>
+            <div className="card-images">'{renderCardImages(dealerHand)}'</div>
             <h2>Your Hand: {printCardsInHand(playerHand)}</h2>
-            <p>Total Value: {calculateHandTotal(playerHand)}</p>
+            <p>Total Value: {calculateTotalValue(playerHand)}</p>
             <button disabled={gameStatus==='finished'} id="hit-button" className="button" onClick={hitHand}>Hit!</button>
             <button disabled={gameStatus==='finished'} id="stand-button" className="button" onClick={standHand}>Stand!</button>
         </div>
