@@ -3,6 +3,8 @@ console.log('the NEW app.js is running!')
 let deckValues = [];
 let dealerHand = [];
 let playerHand = [];
+let gameStatus = 'finished';
+let gameMessage = 'Press Play to Start';
 
 const refreshDeck = () => {
     deckValues = [
@@ -270,16 +272,17 @@ const refreshDeck = () => {
 };
 
 const initiateGame = () => {
-        deckValues = [];
-        dealerHand = [];
-        playerHand = [];
-        refreshDeck();
-        addOneCard(playerHand);
-        addOneCard(playerHand);
-        addOneCard(dealerHand);
-        renderApp();
-        // evaluateGameStatus();
-    }
+    gameStatus = 'playing';
+    gameMessage = 'Game in Progress';
+    deckValues = [];
+    dealerHand = [];
+    playerHand = [];
+    refreshDeck();
+    addOneCard(playerHand);
+    addOneCard(playerHand);
+    addOneCard(dealerHand);
+    renderApp();
+}
 
 const accessCardsInHand = (hand) => {
     if (hand.length > 0) {
@@ -311,9 +314,12 @@ const addOneCard = (hand) => {
 };
 
 const hitHand = () => {
-    addOneCard(playerHand);
-    console.log(playerHand);
-    renderApp();
+    if (calculateHandTotal(playerHand) < 21) {
+        addOneCard(playerHand);
+        console.log(playerHand);
+        checkBust();
+        renderApp();
+    }; 
 };
 
 const standHand = () => {
@@ -321,7 +327,28 @@ const standHand = () => {
         addOneCard(dealerHand);
         //add time delay betwen each addOneCard?
         //setInterval and setTimeout doesn't work
-        renderApp();
+    }
+    evaluateGameStatus();
+    renderApp();
+};
+
+const checkBust = () => {
+    if (calculateHandTotal(playerHand) > 21) {
+        gameStatus = 'finished';
+        gameMessage = 'Bust! You lose.'
+    };
+};
+
+const evaluateGameStatus = () => {
+    if (calculateHandTotal(dealerHand) > 21 || calculateHandTotal(dealerHand) < calculateHandTotal(playerHand)) {
+        gameStatus = 'finished';
+        gameMessage = 'You win! Congratulations!'
+    } else if (calculateHandTotal(dealerHand) > calculateHandTotal(playerHand)) {
+        gameStatus = 'finished';
+        gameMessage = 'You lose!'
+    } else {
+        gameStatus = 'finished';
+        gameMessage = 'It\'s a draw!'
     }
 };
 
@@ -331,15 +358,16 @@ const playerRoot = document.getElementById('player');
 const renderApp = () => {
     const dealerTemplate = (
         <div>
+            <h1>{gameMessage}</h1>
             <button id="play-button" className="button" onClick={initiateGame}>Play?</button>
-            <h1>Dealer Hand: {accessCardsInHand(dealerHand)}</h1>
+            <h2>Dealer Hand: {accessCardsInHand(dealerHand)}</h2>
             <p>Total Value: {calculateHandTotal(dealerHand)}</p>
         </div>
     );
 
     const playerTemplate = (
         <div>
-            <h1>Your Hand: {accessCardsInHand(playerHand)}</h1>
+            <h2>Your Hand: {accessCardsInHand(playerHand)}</h2>
             <p>Total Value: {calculateHandTotal(playerHand)}</p>
             <button id="hit-button" className="button" onClick={hitHand}>Hit!</button>
             <button id="stand-button" className="button" onClick={standHand}>Stand!</button>

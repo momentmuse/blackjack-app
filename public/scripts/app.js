@@ -5,6 +5,8 @@ console.log('the NEW app.js is running!');
 var deckValues = [];
 var dealerHand = [];
 var playerHand = [];
+var gameStatus = 'finished';
+var gameMessage = 'Press Play to Start';
 
 var refreshDeck = function refreshDeck() {
     deckValues = [{
@@ -219,6 +221,8 @@ var refreshDeck = function refreshDeck() {
 };
 
 var initiateGame = function initiateGame() {
+    gameStatus = 'playing';
+    gameMessage = 'Game in Progress';
     deckValues = [];
     dealerHand = [];
     playerHand = [];
@@ -227,7 +231,6 @@ var initiateGame = function initiateGame() {
     addOneCard(playerHand);
     addOneCard(dealerHand);
     renderApp();
-    // evaluateGameStatus();
 };
 
 var accessCardsInHand = function accessCardsInHand(hand) {
@@ -262,9 +265,12 @@ var addOneCard = function addOneCard(hand) {
 };
 
 var hitHand = function hitHand() {
-    addOneCard(playerHand);
-    console.log(playerHand);
-    renderApp();
+    if (calculateHandTotal(playerHand) < 21) {
+        addOneCard(playerHand);
+        console.log(playerHand);
+        checkBust();
+        renderApp();
+    };
 };
 
 var standHand = function standHand() {
@@ -272,7 +278,28 @@ var standHand = function standHand() {
         addOneCard(dealerHand);
         //add time delay betwen each addOneCard?
         //setInterval and setTimeout doesn't work
-        renderApp();
+    }
+    evaluateGameStatus();
+    renderApp();
+};
+
+var checkBust = function checkBust() {
+    if (calculateHandTotal(playerHand) > 21) {
+        gameStatus = 'finished';
+        gameMessage = 'Bust! You lose.';
+    };
+};
+
+var evaluateGameStatus = function evaluateGameStatus() {
+    if (calculateHandTotal(dealerHand) > 21 || calculateHandTotal(dealerHand) < calculateHandTotal(playerHand)) {
+        gameStatus = 'finished';
+        gameMessage = 'You win! Congratulations!';
+    } else if (calculateHandTotal(dealerHand) > calculateHandTotal(playerHand)) {
+        gameStatus = 'finished';
+        gameMessage = 'You lose!';
+    } else {
+        gameStatus = 'finished';
+        gameMessage = 'It\'s a draw!';
     }
 };
 
@@ -284,12 +311,17 @@ var renderApp = function renderApp() {
         'div',
         null,
         React.createElement(
+            'h1',
+            null,
+            gameMessage
+        ),
+        React.createElement(
             'button',
             { id: 'play-button', className: 'button', onClick: initiateGame },
             'Play?'
         ),
         React.createElement(
-            'h1',
+            'h2',
             null,
             'Dealer Hand: ',
             accessCardsInHand(dealerHand)
@@ -306,7 +338,7 @@ var renderApp = function renderApp() {
         'div',
         null,
         React.createElement(
-            'h1',
+            'h2',
             null,
             'Your Hand: ',
             accessCardsInHand(playerHand)
