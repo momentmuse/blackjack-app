@@ -301,7 +301,7 @@ const printCardsInHand = (hand) => {
         }
         return cardsInHand;
     } else {
-        return `Hand is empty!`
+        return `Hand is empty!`;
     }
 };
 
@@ -362,13 +362,13 @@ const evaluateGameStatus = () => {
 //finishes the game and reassigns game message
     if (calculateTotalValue(dealerHand) > 21 || calculateTotalValue(dealerHand) < calculateTotalValue(playerHand)) {
         gameStatus = 'finished';
-        gameMessage = 'You win! Congratulations!'
+        gameMessage = 'You win! Congratulations!';
     } else if (calculateTotalValue(dealerHand) > calculateTotalValue(playerHand)) {
         gameStatus = 'finished';
-        gameMessage = 'You lose!'
+        gameMessage = 'You lose!';
     } else {
         gameStatus = 'finished';
-        gameMessage = 'It\'s a draw!'
+        gameMessage = 'It\'s a draw!';
     }
 };
 
