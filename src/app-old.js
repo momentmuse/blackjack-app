@@ -2,12 +2,14 @@ console.log('app-old.js is running!')
 
 let dealerHand = [
     {
-        card: 'six',
-        value: 6
+        card: 'six of clubs',
+        value: 6,
+        src: 'images/cards/6C.png'
     },
     {
-        card: 'seven',
-        value: 7
+        card: 'seven of clubs',
+        value: 7,
+        src: 'images/cards/7C.png'
     }
 ];
 

@@ -3,11 +3,9 @@
 console.log('the NEW app.js is running!');
 
 var dealerHand = [{
-    card: 'six',
-    value: 6
-}, {
-    card: 'seven',
-    value: 7
+    card: 'six of clubs',
+    value: 6,
+    src: 'images/cards/6C.png'
 }];
 
 var playerHand = [];
@@ -222,6 +220,33 @@ var deckValues = [{
     src: 'images/cards/KD.png'
 }];
 
+var accessCardsInHand = function accessCardsInHand(hand) {
+    if (hand.length > 0) {
+        var cardsInHandArr = [];
+        for (var i = 0; i < hand.length; i++) {
+            cardsInHandArr.push(hand[i].card);
+        }
+        return cardsInHandArr;
+    } else {
+        return 'Hand is empty!';
+    }
+};
+
+var calculateHandTotal = function calculateHandTotal(hand) {
+    if (hand.length > 0) {
+        var valueInHandArr = [];
+        for (var i = 0; i < hand.length; i++) {
+            valueInHandArr.push(hand[i].value);
+        }
+        return valueInHandArr.reduce(function (a, b) {
+            return a + b;
+        });
+    } else {
+        return 0;
+    }
+    //should this include the logic for ace's value = 1 || 11?
+};
+
 var addOneCard = function addOneCard(hand) {
     hand.push(deckValues.splice(Math.floor(Math.random() * 52), 1)[0]);
 };
@@ -230,6 +255,15 @@ var hitHand = function hitHand() {
     addOneCard(playerHand);
     console.log(playerHand);
     renderApp();
+};
+
+var standHand = function standHand() {
+    while (calculateHandTotal(dealerHand) <= 16) {
+        addOneCard(dealerHand);
+        //add time delay betwen each addOneCard?
+        //setInterval and setTimeout doesn't work
+        renderApp();
+    }
 };
 
 var dealerRoot = document.getElementById('dealer');
@@ -247,12 +281,14 @@ var renderApp = function renderApp() {
         React.createElement(
             'h1',
             null,
-            'Dealer Hand: dealerHand here'
+            'Dealer Hand: ',
+            accessCardsInHand(dealerHand)
         ),
         React.createElement(
             'p',
             null,
-            'Total Value: something'
+            'Total Value: ',
+            calculateHandTotal(dealerHand)
         )
     );
 
@@ -262,12 +298,14 @@ var renderApp = function renderApp() {
         React.createElement(
             'h1',
             null,
-            'Your Hand: playerHand here'
+            'Your Hand: ',
+            accessCardsInHand(playerHand)
         ),
         React.createElement(
             'p',
             null,
-            'Total Value: something'
+            'Total Value: ',
+            calculateHandTotal(playerHand)
         ),
         React.createElement(
             'button',
@@ -276,7 +314,7 @@ var renderApp = function renderApp() {
         ),
         React.createElement(
             'button',
-            { id: 'stand-button', className: 'button' },
+            { id: 'stand-button', className: 'button', onClick: standHand },
             'Stand!'
         )
     );

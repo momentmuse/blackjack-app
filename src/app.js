@@ -2,13 +2,15 @@ console.log('the NEW app.js is running!')
 
 let dealerHand = [
     {
-        card: 'six',
-        value: 6
+        card: 'six of clubs',
+        value: 6,
+        src: 'images/cards/6C.png'
     },
-    {
-        card: 'seven',
-        value: 7
-    }
+    // {
+    //     card: 'seven of clubs',
+    //     value: 7,
+    //     src: 'images/cards/7C.png'
+    // },
 ];
 
 let playerHand = [];
@@ -276,6 +278,31 @@ let deckValues = [
     }
 ];
 
+const accessCardsInHand = (hand) => {
+    if (hand.length > 0) {
+        let cardsInHandArr = [];
+        for (let i = 0; i < hand.length; i++) {
+            cardsInHandArr.push(hand[i].card);
+        }
+        return cardsInHandArr;
+    } else {
+        return `Hand is empty!`
+    }
+};
+
+const calculateHandTotal = (hand) => {
+    if (hand.length > 0) {
+        let valueInHandArr = [];
+        for (let i = 0; i < hand.length; i++) {
+            valueInHandArr.push(hand[i].value);
+        }
+        return valueInHandArr.reduce((a,b) => a+b);
+    } else {
+        return 0;
+    }
+    //should this include the logic for ace's value = 1 || 11?
+};
+
 const addOneCard = (hand) => {
     hand.push(deckValues.splice(Math.floor(Math.random() * 52), 1)[0]);
 };
@@ -286,6 +313,15 @@ const hitHand = () => {
     renderApp();
 };
 
+const standHand = () => {
+    while (calculateHandTotal(dealerHand) <= 16) {
+        addOneCard(dealerHand);
+        //add time delay betwen each addOneCard?
+        //setInterval and setTimeout doesn't work
+        renderApp();
+    }
+};
+
 const dealerRoot = document.getElementById('dealer');
 const playerRoot = document.getElementById('player');
 
@@ -293,17 +329,17 @@ const renderApp = () => {
     const dealerTemplate = (
         <div>
             <button id="play-button" className="button">Play?</button>
-            <h1>Dealer Hand: dealerHand here</h1>
-            <p>Total Value: something</p>
+            <h1>Dealer Hand: {accessCardsInHand(dealerHand)}</h1>
+            <p>Total Value: {calculateHandTotal(dealerHand)}</p>
         </div>
     );
 
     const playerTemplate = (
         <div>
-            <h1>Your Hand: playerHand here</h1>
-            <p>Total Value: something</p>
+            <h1>Your Hand: {accessCardsInHand(playerHand)}</h1>
+            <p>Total Value: {calculateHandTotal(playerHand)}</p>
             <button id="hit-button" className="button" onClick={hitHand}>Hit!</button>
-            <button id="stand-button" className="button">Stand!</button>
+            <button id="stand-button" className="button" onClick={standHand}>Stand!</button>
         </div>
     );
 
