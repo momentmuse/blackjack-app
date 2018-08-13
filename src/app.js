@@ -289,6 +289,7 @@ const printCardsInHand = (hand) => {
         let cardsInHand = [];
         for (let i = 0; i < hand.length; i++) {
             cardsInHand.push(hand[i].card);
+        //change this line to return nested JSX elements to render directly to DOM
         }
         return cardsInHand;
     } else {
@@ -296,7 +297,7 @@ const printCardsInHand = (hand) => {
     }
 };
 
-const renderCardImages = () => {
+const renderCardImage = () => {
     //iterate over objects in the hand array and inject src img into JSX
     //create an <img src=""></img> item that is pushed into JSX each time you addOneCard?
     //remember to resize the images before you render them!
@@ -326,6 +327,7 @@ const checkAce = (hand) => {
 const addOneCard = (hand) => {
     hand.push(deckValues.splice(Math.floor(Math.random() * deckValues.length), 1)[0]);
     checkAce(hand);
+    renderCardImage();
 };
 
 const hitHand = () => {

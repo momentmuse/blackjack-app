@@ -238,6 +238,7 @@ var printCardsInHand = function printCardsInHand(hand) {
         var cardsInHand = [];
         for (var i = 0; i < hand.length; i++) {
             cardsInHand.push(hand[i].card);
+            //change this line to return nested JSX elements to render directly to DOM
         }
         return cardsInHand;
     } else {
@@ -245,7 +246,7 @@ var printCardsInHand = function printCardsInHand(hand) {
     }
 };
 
-var renderCardImages = function renderCardImages() {
+var renderCardImage = function renderCardImage() {
     //iterate over objects in the hand array and inject src img into JSX
     //create an <img src=""></img> item that is pushed into JSX each time you addOneCard?
     //remember to resize the images before you render them!
@@ -275,6 +276,7 @@ var checkAce = function checkAce(hand) {
 var addOneCard = function addOneCard(hand) {
     hand.push(deckValues.splice(Math.floor(Math.random() * deckValues.length), 1)[0]);
     checkAce(hand);
+    renderCardImage();
 };
 
 var hitHand = function hitHand() {
