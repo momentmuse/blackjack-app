@@ -278,12 +278,13 @@ var calculateTotalValue = function calculateTotalValue(hand) {
     }
 };
 
+//find first index of an object (card) whose value===11 (ace default value===11)
+var isThereAnAce = function isThereAnAce(card) {
+    return card.value === 11;
+};
+
 //handles the rule in blackjack that an ace can be 11 || 1
 var checkAce = function checkAce(hand) {
-    //find first index of an object (card) whose value===11 (ace default value===11)
-    var isThereAnAce = function isThereAnAce(card) {
-        return card.value === 11;
-    };
     //if the total value of the hand is greater than 21 && an ace exists at an index (>=0)
     if (calculateTotalValue(hand) > 21 && hand.findIndex(isThereAnAce) >= 0) {
         //then hand[at that index]'s value should reassigned to === 1
@@ -336,7 +337,8 @@ var hitHand = function hitHand() {
 
 var standHand = function standHand() {
     //while the value of dealer hand is <=16, dealer continues adding cards to hand
-    while (calculateTotalValue(dealerHand) <= 16) {
+    //also while dealer has an ace and total value is >=17 and <21, dealer must stand
+    while (calculateTotalValue(dealerHand) <= 16 || calculateTotalValue(dealerHand) < 21 && dealerHand.findIndex(isThereAnAce) >= 0) {
         addOneCard(dealerHand);
         //add time delay betwen each addOneCard?
         //setInterval and setTimeout doesn't work
