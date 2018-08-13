@@ -10,16 +10,7 @@ var dealerHand = [{
     value: 7
 }];
 
-var playerHand = [{
-    card: 'two',
-    value: 2
-}, {
-    card: 'three',
-    value: 3
-}, {
-    card: 'ten',
-    value: 10
-}];
+var playerHand = [];
 
 var deckValues = [{
     card: 'ace of clubs',
@@ -243,21 +234,29 @@ var initiateGame = function initiateGame() {
 };
 
 var accessCardsInHand = function accessCardsInHand(hand) {
-    var cardsInHandArr = [];
-    for (var i = 0; i < hand.length; i++) {
-        cardsInHandArr.push(hand[i].card);
+    if (hand.length > 0) {
+        var cardsInHandArr = [];
+        for (var i = 0; i < hand.length; i++) {
+            cardsInHandArr.push(hand[i].card);
+        }
+        return cardsInHandArr;
+    } else {
+        return 'Hand is empty!';
     }
-    return cardsInHandArr;
 };
 
 var calculateHandTotal = function calculateHandTotal(hand) {
-    var valueInHandArr = [];
-    for (var i = 0; i < hand.length; i++) {
-        valueInHandArr.push(hand[i].value);
+    if (hand.length > 0) {
+        var valueInHandArr = [];
+        for (var i = 0; i < hand.length; i++) {
+            valueInHandArr.push(hand[i].value);
+        }
+        return valueInHandArr.reduce(function (a, b) {
+            return a + b;
+        });
+    } else {
+        return 0;
     }
-    return valueInHandArr.reduce(function (a, b) {
-        return a + b;
-    });
     //should this include the logic for ace's value = 1 || 11?
 };
 
@@ -271,11 +270,11 @@ var evaluateGameStatus = function evaluateGameStatus() {
     //move all conditional logic for alerts here
 };
 
-var hitHand = function hitHand(playerHand) {
-    addOneCard(playerHand);
-    if (calculateHandTotal(playerHand) > 21) {
-        alert('Bust! You lose!');
-    }
+var hitHand = function hitHand(hand) {
+    addOneCard(hand);
+    // if(calculateHandTotal(playerHand) > 21) {
+    //     alert('Bust! You lose!')
+    // }
     renderApp();
 };
 
@@ -306,64 +305,115 @@ var renderCardImage = function renderCardImage() {
     //how to make sure there are no duplicate cards already rendered?? idk
 };
 
-var dealerTemplate = React.createElement(
-    'div',
-    null,
-    React.createElement(
-        'button',
-        { id: 'play-button', className: 'button', onClick: initiateGame },
-        'Play?'
-    ),
-    React.createElement(
-        'h1',
-        null,
-        'Dealer: ',
-        accessCardsInHand(dealerHand)
-    ),
-    React.createElement(
-        'p',
-        null,
-        'Total Value: ',
-        calculateHandTotal(dealerHand)
-    )
-);
 var dealerRoot = document.getElementById('dealer');
-
-var playerTemplate = React.createElement(
-    'div',
-    null,
-    React.createElement(
-        'h1',
-        null,
-        'Your Hand: ',
-        accessCardsInHand(playerHand)
-    ),
-    React.createElement(
-        'p',
-        null,
-        'Total Value: ',
-        calculateHandTotal(playerHand)
-    ),
-    React.createElement(
-        'button',
-        { id: 'hit-button', className: 'button', onClick: hitHand },
-        'Hit!'
-    ),
-    React.createElement(
-        'button',
-        { id: 'stand-button', className: 'button', onClick: standHand },
-        'Stand!'
-    ),
-    React.createElement(
-        'p',
-        null,
-        'This is a test image: ',
-        React.createElement('img', { src: deckValues[0].src })
-    )
-);
 var playerRoot = document.getElementById('player');
 
+var renderAppOld = function renderAppOld() {
+    var dealerTemplate = React.createElement(
+        'div',
+        null,
+        React.createElement(
+            'button',
+            { id: 'play-button', className: 'button' },
+            'Play?'
+        ),
+        React.createElement(
+            'h1',
+            null,
+            'Dealer: ',
+            accessCardsInHand(dealerHand)
+        ),
+        React.createElement(
+            'p',
+            null,
+            'Total Value: ',
+            calculateHandTotal(dealerHand)
+        )
+    );
+
+    var playerTemplate = React.createElement(
+        'div',
+        null,
+        React.createElement(
+            'h1',
+            null,
+            'Your Hand: ',
+            accessCardsInHand(playerHand)
+        ),
+        React.createElement(
+            'p',
+            null,
+            'Total Value: ',
+            calculateHandTotal(playerHand)
+        ),
+        React.createElement(
+            'button',
+            { id: 'hit-button', className: 'button', onClick: hitHand(playerHand) },
+            'Hit!'
+        ),
+        React.createElement(
+            'button',
+            { id: 'stand-button', className: 'button' },
+            'Stand!'
+        ),
+        React.createElement(
+            'p',
+            null,
+            'This is a test image: ',
+            React.createElement('img', { src: deckValues[0].src })
+        )
+    );
+
+    ReactDOM.render(dealerTemplate, dealerRoot);
+    ReactDOM.render(playerTemplate, playerRoot);
+};
+
 var renderApp = function renderApp() {
+    var dealerTemplate = React.createElement(
+        'div',
+        null,
+        React.createElement(
+            'button',
+            { id: 'play-button', className: 'button' },
+            'Play?'
+        ),
+        React.createElement(
+            'h1',
+            null,
+            'Dealer: something'
+        ),
+        React.createElement(
+            'p',
+            null,
+            'Total Value: something'
+        )
+    );
+
+    var playerTemplate = React.createElement(
+        'div',
+        null,
+        React.createElement(
+            'h1',
+            null,
+            'Your Hand: something'
+        ),
+        React.createElement(
+            'p',
+            null,
+            'Total Value: something'
+        ),
+        React.createElement(
+            'button',
+            { id: 'hit-button', className: 'button', onClick: hitHand(playerHand) },
+            'Hit!'
+        ),
+        React.createElement(
+            'button',
+            { id: 'stand-button', className: 'button' },
+            'Stand!'
+        )
+    );
+
     ReactDOM.render(dealerTemplate, dealerRoot);
     ReactDOM.render(playerTemplate, playerRoot);
 };

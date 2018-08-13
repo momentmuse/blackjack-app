@@ -11,20 +11,7 @@ let dealerHand = [
     }
 ];
 
-let playerHand = [    
-    {
-        card: 'two',
-        value: 2
-    },
-    {
-        card: 'three',
-        value: 3
-    },
-    {
-        card: 'ten',
-        value: 10
-    }
-];
+let playerHand = [];
 
 let deckValues = [
     {
@@ -301,19 +288,27 @@ const initiateGame = () => {
 }
 
 const accessCardsInHand = (hand) => {
-    let cardsInHandArr = [];
-    for (let i = 0; i < hand.length; i++) {
-        cardsInHandArr.push(hand[i].card);
+    if (hand.length > 0) {
+        let cardsInHandArr = [];
+        for (let i = 0; i < hand.length; i++) {
+            cardsInHandArr.push(hand[i].card);
+        }
+        return cardsInHandArr;
+    } else {
+        return `Hand is empty!`
     }
-    return cardsInHandArr;
-}
+};
 
 const calculateHandTotal = (hand) => {
-    let valueInHandArr = [];
-    for (let i = 0; i < hand.length; i++) {
-        valueInHandArr.push(hand[i].value);
+    if (hand.length > 0) {
+        let valueInHandArr = [];
+        for (let i = 0; i < hand.length; i++) {
+            valueInHandArr.push(hand[i].value);
+        }
+        return valueInHandArr.reduce((a,b) => a+b);
+    } else {
+        return 0;
     }
-    return valueInHandArr.reduce((a,b) => a+b);
     //should this include the logic for ace's value = 1 || 11?
 };
 
@@ -327,11 +322,11 @@ const evaluateGameStatus = () => {
     //move all conditional logic for alerts here
 };
 
-const hitHand = (playerHand) => {
-    addOneCard(playerHand);
-    if(calculateHandTotal(playerHand) > 21) {
-        alert('Bust! You lose!')
-    }
+const hitHand = (hand) => {
+    addOneCard(hand);
+    // if(calculateHandTotal(playerHand) > 21) {
+    //     alert('Bust! You lose!')
+    // }
     renderApp();
 };
 
@@ -362,29 +357,53 @@ const renderCardImage = () => {
     //how to make sure there are no duplicate cards already rendered?? idk
 };
 
-const dealerTemplate = (
-    <div>
-        <button id="play-button" className="button" onClick={initiateGame}>Play?</button>
-        <h1>Dealer: {accessCardsInHand(dealerHand)}</h1>
-        <p>Total Value: {calculateHandTotal(dealerHand)}</p>
-    </div>
-);
 const dealerRoot = document.getElementById('dealer');
-
-const playerTemplate = (
-    <div>
-        <h1>Your Hand: {accessCardsInHand(playerHand)}</h1>
-        <p>Total Value: {calculateHandTotal(playerHand)}</p>
-        <button id="hit-button" className="button" onClick={hitHand}>Hit!</button>
-        <button id="stand-button" className="button" onClick={standHand}>Stand!</button>
-        <p>This is a test image: <img src={deckValues[0].src}></img></p>
-    </div>
-);
 const playerRoot = document.getElementById('player');
 
-const renderApp = () => {
+const renderAppOld = () => {
+    const dealerTemplate = (
+        <div>
+            <button id="play-button" className="button">Play?</button>
+            <h1>Dealer: {accessCardsInHand(dealerHand)}</h1>
+            <p>Total Value: {calculateHandTotal(dealerHand)}</p>
+        </div>
+    );
+
+    const playerTemplate = (
+        <div>
+            <h1>Your Hand: {accessCardsInHand(playerHand)}</h1>
+            <p>Total Value: {calculateHandTotal(playerHand)}</p>
+            <button id="hit-button" className="button" onClick={hitHand(playerHand)}>Hit!</button>
+            <button id="stand-button" className="button">Stand!</button>
+            <p>This is a test image: <img src={deckValues[0].src}></img></p>
+        </div>
+    );
+
     ReactDOM.render(dealerTemplate, dealerRoot);
     ReactDOM.render(playerTemplate, playerRoot);
 };
+
+const renderApp = () => {
+    const dealerTemplate = (
+        <div>
+            <button id="play-button" className="button">Play?</button>
+            <h1>Dealer: something</h1>
+            <p>Total Value: something</p>
+        </div>
+    );
+
+    const playerTemplate = (
+        <div>
+            <h1>Your Hand: something</h1>
+            <p>Total Value: something</p>
+            <button id="hit-button" className="button" onClick={hitHand(playerHand)}>Hit!</button>
+            <button id="stand-button" className="button">Stand!</button>
+        </div>
+    );
+
+    ReactDOM.render(dealerTemplate, dealerRoot);
+    ReactDOM.render(playerTemplate, playerRoot);
+};
+
 
 renderApp();
