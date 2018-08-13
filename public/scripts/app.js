@@ -235,11 +235,11 @@ var initiateGame = function initiateGame() {
 
 var printCardsInHand = function printCardsInHand(hand) {
     if (hand.length > 0) {
-        var cardsInHandArr = [];
+        var cardsInHand = [];
         for (var i = 0; i < hand.length; i++) {
-            cardsInHandArr.push(hand[i].card);
+            cardsInHand.push(hand[i].card);
         }
-        return cardsInHandArr;
+        return cardsInHand;
     } else {
         return 'Hand is empty!';
     }
@@ -253,11 +253,11 @@ var renderCardImages = function renderCardImages() {
 
 var calculateHandTotal = function calculateHandTotal(hand) {
     if (hand.length > 0) {
-        var valueInHandArr = [];
+        var valuesOfHand = [];
         for (var i = 0; i < hand.length; i++) {
-            valueInHandArr.push(hand[i].value);
+            valuesOfHand.push(hand[i].value);
         }
-        return valueInHandArr.reduce(function (a, b) {
+        return valuesOfHand.reduce(function (a, b) {
             return a + b;
         });
     } else {

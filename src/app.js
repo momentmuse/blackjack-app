@@ -286,11 +286,11 @@ const initiateGame = () => {
 
 const printCardsInHand = (hand) => {
     if (hand.length > 0) {
-        let cardsInHandArr = [];
+        let cardsInHand = [];
         for (let i = 0; i < hand.length; i++) {
-            cardsInHandArr.push(hand[i].card);
+            cardsInHand.push(hand[i].card);
         }
-        return cardsInHandArr;
+        return cardsInHand;
     } else {
         return `Hand is empty!`
     }
@@ -304,11 +304,11 @@ const renderCardImages = () => {
 
 const calculateHandTotal = (hand) => {
     if (hand.length > 0) {
-        let valueInHandArr = [];
+        let valuesOfHand = [];
         for (let i = 0; i < hand.length; i++) {
-            valueInHandArr.push(hand[i].value);
+            valuesOfHand.push(hand[i].value);
         }
-        return valueInHandArr.reduce((a,b) => a+b);
+        return valuesOfHand.reduce((a,b) => a+b);
     } else {
         return 0;
     }
