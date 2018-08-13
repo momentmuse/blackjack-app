@@ -360,7 +360,7 @@ const renderCardImage = () => {
 const dealerRoot = document.getElementById('dealer');
 const playerRoot = document.getElementById('player');
 
-const renderAppOld = () => {
+const renderApp = () => {
     const dealerTemplate = (
         <div>
             <button id="play-button" className="button">Play?</button>
@@ -382,28 +382,5 @@ const renderAppOld = () => {
     ReactDOM.render(dealerTemplate, dealerRoot);
     ReactDOM.render(playerTemplate, playerRoot);
 };
-
-const renderApp = () => {
-    const dealerTemplate = (
-        <div>
-            <button id="play-button" className="button">Play?</button>
-            <h1>Dealer: something</h1>
-            <p>Total Value: something</p>
-        </div>
-    );
-
-    const playerTemplate = (
-        <div>
-            <h1>Your Hand: something</h1>
-            <p>Total Value: something</p>
-            <button id="hit-button" className="button" onClick={hitHand(playerHand)}>Hit!</button>
-            <button id="stand-button" className="button">Stand!</button>
-        </div>
-    );
-
-    ReactDOM.render(dealerTemplate, dealerRoot);
-    ReactDOM.render(playerTemplate, playerRoot);
-};
-
 
 renderApp();
