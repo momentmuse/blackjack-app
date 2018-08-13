@@ -4,13 +4,13 @@ let deckValues = [];
 let dealerHand = [];
 let playerHand = [];
 let gameStatus = 'finished';
-let gameMessage = 'Press Play to Start';
+let gameMessage = 'Click New Game to Start';
 
 const refreshDeck = () => {
     deckValues = [
         {
             card: 'ace of clubs',
-            value: 1 || 11,
+            value: 11,
             src: 'images/cards/AC.png'
         },
         {
@@ -75,7 +75,7 @@ const refreshDeck = () => {
         },
         {
             card: 'ace of hearts',
-            value: 1 || 11,
+            value: 11,
             src: 'images/cards/AH.png'
         },
         {
@@ -140,7 +140,7 @@ const refreshDeck = () => {
         },
         {
             card: 'ace of spades',
-            value: 1 || 11,
+            value: 11,
             src: 'images/cards/AS.png'
         },
         {
@@ -205,7 +205,7 @@ const refreshDeck = () => {
         },
         {
             card: 'ace of diamonds',
-            value: 1 || 11,
+            value: 11,
             src: 'images/cards/AD.png'
         },
         {
@@ -284,7 +284,7 @@ const initiateGame = () => {
     renderApp();
 }
 
-const accessCardsInHand = (hand) => {
+const printCardsInHand = (hand) => {
     if (hand.length > 0) {
         let cardsInHandArr = [];
         for (let i = 0; i < hand.length; i++) {
@@ -294,6 +294,12 @@ const accessCardsInHand = (hand) => {
     } else {
         return `Hand is empty!`
     }
+};
+
+const renderCardImages = () => {
+    //iterate over objects in the hand array and inject src img into JSX
+    //create an <img src=""></img> item that is pushed into JSX each time you addOneCard?
+    //remember to resize the images before you render them!
 };
 
 const calculateHandTotal = (hand) => {
@@ -309,15 +315,22 @@ const calculateHandTotal = (hand) => {
     //should this include the logic for ace's value = 1 || 11?
 };
 
+const checkAce = (hand) => {
+    if (calculateHandTotal(hand) > 21) {
+
+    }
+    //possible methods to use: .find, .findIndex, .filter by object key card.includes 'ace'
+    //find index of item with hand[findIndex of card.includes('ace') && value===11].value = 1
+};
+
 const addOneCard = (hand) => {
-    hand.push(deckValues.splice(Math.floor(Math.random() * 52), 1)[0]);
+    hand.push(deckValues.splice(Math.floor(Math.random() * deckValues.length), 1)[0]);
+    checkAce(hand);
 };
 
 const hitHand = () => {
     if (calculateHandTotal(playerHand) < 21) {
         addOneCard(playerHand);
-        console.log(playerHand);
-    //check for ace logic
         checkBust();
         renderApp();
     }; 
@@ -326,17 +339,11 @@ const hitHand = () => {
 const standHand = () => {
     while (calculateHandTotal(dealerHand) <= 16) {
         addOneCard(dealerHand);
-    //check for ace logic
         //add time delay betwen each addOneCard?
         //setInterval and setTimeout doesn't work
     }
     evaluateGameStatus();
     renderApp();
-};
-
-const checkAce = () => {
-    //omg what if there are two aces in a hand? or three aces?
-    //possible methods to use: .find, .findIndex, .filter by object key card.includes 'ace'
 };
 
 const checkBust = () => {
@@ -360,12 +367,6 @@ const evaluateGameStatus = () => {
     }
 };
 
-const renderCardImages = () => {
-    //iterate over objects in the hand array and inject src img into JSX
-    //create an <img src=""></img> item that is pushed into JSX each time you addOneCard?
-    //remember to resize the images before you render them!
-};
-
 const dealerRoot = document.getElementById('dealer');
 const playerRoot = document.getElementById('player');
 
@@ -373,24 +374,23 @@ const renderApp = () => {
     const dealerTemplate = (
         <div>
             <h1>{gameMessage}</h1>
-            <button id="play-button" className="button" onClick={initiateGame}>Play?</button>
-            <h2>Dealer Hand: {accessCardsInHand(dealerHand)}</h2>
+            <button id="play-button" className="button" onClick={initiateGame}>New Game</button>
+            <h2>Dealer Hand: {printCardsInHand(dealerHand)}</h2>
             <p>Total Value: {calculateHandTotal(dealerHand)}</p>
         </div>
     );
 
     const playerTemplate = (
         <div>
-            <h2>Your Hand: {accessCardsInHand(playerHand)}</h2>
+            <h2>Your Hand: {printCardsInHand(playerHand)}</h2>
             <p>Total Value: {calculateHandTotal(playerHand)}</p>
-            <button id="hit-button" className="button" onClick={hitHand}>Hit!</button>
-            <button id="stand-button" className="button" onClick={standHand}>Stand!</button>
+            <button disabled={gameStatus==='finished'} id="hit-button" className="button" onClick={hitHand}>Hit!</button>
+            <button disabled={gameStatus==='finished'} id="stand-button" className="button" onClick={standHand}>Stand!</button>
         </div>
     );
 
     ReactDOM.render(dealerTemplate, dealerRoot);
     ReactDOM.render(playerTemplate, playerRoot);
 };
-
 
 renderApp();
