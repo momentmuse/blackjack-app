@@ -268,6 +268,7 @@ var hitHand = function hitHand() {
     if (calculateHandTotal(playerHand) < 21) {
         addOneCard(playerHand);
         console.log(playerHand);
+        //check for ace logic
         checkBust();
         renderApp();
     };
@@ -276,6 +277,7 @@ var hitHand = function hitHand() {
 var standHand = function standHand() {
     while (calculateHandTotal(dealerHand) <= 16) {
         addOneCard(dealerHand);
+        //check for ace logic
         //add time delay betwen each addOneCard?
         //setInterval and setTimeout doesn't work
     }
@@ -283,7 +285,13 @@ var standHand = function standHand() {
     renderApp();
 };
 
+var checkAce = function checkAce() {
+    //omg what if there are two aces in a hand? or three aces?
+    //possible methods to use: .find, .findIndex, .filter by object key card.includes 'ace'
+};
+
 var checkBust = function checkBust() {
+    //check for ace logic
     if (calculateHandTotal(playerHand) > 21) {
         gameStatus = 'finished';
         gameMessage = 'Bust! You lose.';
@@ -301,6 +309,12 @@ var evaluateGameStatus = function evaluateGameStatus() {
         gameStatus = 'finished';
         gameMessage = 'It\'s a draw!';
     }
+};
+
+var renderCardImages = function renderCardImages() {
+    //iterate over objects in the hand array and inject src img into JSX
+    //create an <img src=""></img> item that is pushed into JSX each time you addOneCard?
+    //remember to resize the images before you render them!
 };
 
 var dealerRoot = document.getElementById('dealer');
