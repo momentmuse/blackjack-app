@@ -264,13 +264,15 @@ var calculateHandTotal = function calculateHandTotal(hand) {
     } else {
         return 0;
     }
-    //should this include the logic for ace's value = 1 || 11?
 };
 
 var checkAce = function checkAce(hand) {
-    if (calculateHandTotal(hand) > 21) {}
-    //possible methods to use: .find, .findIndex, .filter by object key card.includes 'ace'
-    //find index of item with hand[findIndex of card.includes('ace') && value===11].value = 1
+    var isThereAnAce = function isThereAnAce(card) {
+        return card.value === 11;
+    };
+    if (calculateHandTotal(hand) > 21 && hand.findIndex(isThereAnAce) >= 0) {
+        hand[hand.findIndex(isThereAnAce)].value = 1;
+    }
 };
 
 var addOneCard = function addOneCard(hand) {
@@ -298,7 +300,6 @@ var standHand = function standHand() {
 };
 
 var checkBust = function checkBust() {
-    //check for ace logic
     if (calculateHandTotal(playerHand) > 21) {
         gameStatus = 'finished';
         gameMessage = 'Bust! You lose.';

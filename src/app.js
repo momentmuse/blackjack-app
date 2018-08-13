@@ -313,15 +313,13 @@ const calculateHandTotal = (hand) => {
     } else {
         return 0;
     }
-    //should this include the logic for ace's value = 1 || 11?
 };
 
 const checkAce = (hand) => {
-    if (calculateHandTotal(hand) > 21) {
-
+    const isThereAnAce = ( card => card.value===11 );
+    if (calculateHandTotal(hand) > 21 && hand.findIndex(isThereAnAce) >= 0) {
+        hand[hand.findIndex(isThereAnAce)].value = 1;
     }
-    //possible methods to use: .find, .findIndex, .filter by object key card.includes 'ace'
-    //find index of item with hand[findIndex of card.includes('ace') && value===11].value = 1
 };
 
 const addOneCard = (hand) => {
@@ -349,7 +347,6 @@ const standHand = () => {
 };
 
 const checkBust = () => {
-    //check for ace logic
     if (calculateHandTotal(playerHand) > 21) {
         gameStatus = 'finished';
         gameMessage = 'Bust! You lose.'
