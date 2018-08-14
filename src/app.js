@@ -305,7 +305,19 @@ const printCardsInHand = (hand) => {
     }
 };
 
-const renderCardImages = () => {
+let reactImages = [];
+
+const renderCardImages = (hand) => {
+    if (hand.length > 0) {
+        let cardImages = [];
+        for (let i = 0; i < hand.length; i++) {
+            cardImages.push(hand[i].src);
+        }
+        reactImages = cardImages.map(imgSrc => <img src={`${imgSrc}`} className="card-img"/>);
+        return reactImages;
+    } else {
+        return `No card images!`;
+    }
     //iterate over objects in the hand array and inject src img into JSX
     //create an <img src=""></img> item that is pushed into JSX each time you addOneCard?
     //remember to resize the images before you render them!
@@ -400,13 +412,15 @@ const standHand = () => {
 const dealerRoot = document.getElementById('dealer');
 const playerRoot = document.getElementById('player');
 
+const testImg = <img src='images/cards/2H.png' className="card-img"/>
+
 //React JSX components
 const renderApp = () => {
     const dealerTemplate = (
         <div>
             <h1>{gameMessage}</h1>
             <button id="play-button" className="button" onClick={initiateGame}>New Game</button>
-            <div className="card-images">'{renderCardImages(dealerHand)}'</div>
+            <div className="card-images">{renderCardImages(dealerHand)}</div>
             <h2>Dealer Hand: {printCardsInHand(dealerHand)}</h2>
             <p>Total Value: {calculateTotalValue(dealerHand)}</p>
         </div>
@@ -414,11 +428,12 @@ const renderApp = () => {
 
     const playerTemplate = (
         <div>
-            <div className="card-images">'{renderCardImages(dealerHand)}'</div>
+            <div className="card-images">{renderCardImages(playerHand)}</div>
             <h2>Your Hand: {printCardsInHand(playerHand)}</h2>
             <p>Total Value: {calculateTotalValue(playerHand)}</p>
             <button disabled={gameStatus==='finished'} id="hit-button" className="button" onClick={hitHand}>Hit!</button>
             <button disabled={gameStatus==='finished'} id="stand-button" className="button" onClick={standHand}>Stand!</button>
+            <div>{testImg}</div>
         </div>
     );
 

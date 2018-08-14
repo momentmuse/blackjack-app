@@ -254,7 +254,21 @@ var printCardsInHand = function printCardsInHand(hand) {
     }
 };
 
-var renderCardImages = function renderCardImages() {
+var reactImages = [];
+
+var renderCardImages = function renderCardImages(hand) {
+    if (hand.length > 0) {
+        var cardImages = [];
+        for (var i = 0; i < hand.length; i++) {
+            cardImages.push(hand[i].src);
+        }
+        reactImages = cardImages.map(function (imgSrc) {
+            return React.createElement('img', { src: '' + imgSrc, className: 'card-img' });
+        });
+        return reactImages;
+    } else {
+        return 'No card images!';
+    }
     //iterate over objects in the hand array and inject src img into JSX
     //create an <img src=""></img> item that is pushed into JSX each time you addOneCard?
     //remember to resize the images before you render them!
@@ -352,6 +366,8 @@ var standHand = function standHand() {
 var dealerRoot = document.getElementById('dealer');
 var playerRoot = document.getElementById('player');
 
+var testImg = React.createElement('img', { src: 'images/cards/2H.png', className: 'card-img' });
+
 //React JSX components
 var renderApp = function renderApp() {
     var dealerTemplate = React.createElement(
@@ -370,9 +386,7 @@ var renderApp = function renderApp() {
         React.createElement(
             'div',
             { className: 'card-images' },
-            '\'',
-            renderCardImages(dealerHand),
-            '\''
+            renderCardImages(dealerHand)
         ),
         React.createElement(
             'h2',
@@ -394,9 +408,7 @@ var renderApp = function renderApp() {
         React.createElement(
             'div',
             { className: 'card-images' },
-            '\'',
-            renderCardImages(dealerHand),
-            '\''
+            renderCardImages(playerHand)
         ),
         React.createElement(
             'h2',
@@ -419,6 +431,11 @@ var renderApp = function renderApp() {
             'button',
             { disabled: gameStatus === 'finished', id: 'stand-button', className: 'button', onClick: standHand },
             'Stand!'
+        ),
+        React.createElement(
+            'div',
+            null,
+            testImg
         )
     );
 
