@@ -396,21 +396,21 @@ var renderApp = function renderApp() {
             'Play?'
         ),
         React.createElement(
-            'h2',
-            null,
-            'Total Value: ',
-            calculateTotalValue(dealerHand)
-        ),
-        React.createElement(
             'div',
-            { className: 'card-images' },
-            renderCardImages(dealerHand)
-        ),
-        React.createElement(
-            'p',
-            null,
-            'Dealer Hand Values: ',
-            printCardValues(dealerHand)
+            { className: 'card-div' },
+            React.createElement(
+                'h2',
+                null,
+                'Total Value: ',
+                calculateTotalValue(dealerHand)
+            ),
+            renderCardImages(dealerHand),
+            React.createElement(
+                'p',
+                null,
+                'Dealer Hand Values: ',
+                printCardValues(dealerHand)
+            )
         )
     );
 
@@ -418,21 +418,21 @@ var renderApp = function renderApp() {
         'div',
         null,
         React.createElement(
-            'h2',
-            null,
-            'Total Value: ',
-            calculateTotalValue(playerHand)
-        ),
-        React.createElement(
             'div',
-            { className: 'card-images' },
-            renderCardImages(playerHand)
-        ),
-        React.createElement(
-            'p',
-            null,
-            'Your Hand Values: ',
-            printCardValues(playerHand)
+            { className: 'card-div' },
+            React.createElement(
+                'h2',
+                null,
+                'Total Value: ',
+                calculateTotalValue(playerHand)
+            ),
+            renderCardImages(playerHand),
+            React.createElement(
+                'p',
+                null,
+                'Your Hand Values: ',
+                printCardValues(playerHand)
+            )
         ),
         React.createElement(
             'button',

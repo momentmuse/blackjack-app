@@ -425,24 +425,32 @@ const playerRoot = document.getElementById('player');
 const renderApp = () => {
     const dealerTemplate = (
         <div>
+
             <h2>{gameMessage}</h2>
             <button id="reset-button" className="button" onClick={resetGame}>Reshuffle</button>
             <button disabled={gameStatus==='playing' || gameStatus==='finished'} id="play-button" className="button" onClick={initiateGame}>Play?</button>
             
-            <h2>Total Value: {calculateTotalValue(dealerHand)}</h2>
-            <div className="card-images">{renderCardImages(dealerHand)}</div>
-            <p>Dealer Hand Values: {printCardValues(dealerHand)}</p>
+            <div className="card-div">
+                <h2>Total Value: {calculateTotalValue(dealerHand)}</h2>
+                {renderCardImages(dealerHand)}
+                <p>Dealer Hand Values: {printCardValues(dealerHand)}</p>
+            </div>
+          
         </div>
     );
 
     const playerTemplate = (
         <div>
-            <h2>Total Value: {calculateTotalValue(playerHand)}</h2>
-            <div className="card-images">{renderCardImages(playerHand)}</div>
-            <p>Your Hand Values: {printCardValues(playerHand)}</p>
+
+            <div className="card-div">
+                <h2>Total Value: {calculateTotalValue(playerHand)}</h2>
+                {renderCardImages(playerHand)}
+                <p>Your Hand Values: {printCardValues(playerHand)}</p>
+            </div>
 
             <button disabled={gameStatus==='finished' || gameStatus==='ready' } id="hit-button" className="button" onClick={hitHand}>Hit!</button>
             <button disabled={gameStatus==='finished' || gameStatus==='ready' } id="stand-button" className="button" onClick={standHand}>Stand!</button>
+
         </div>
     );
 
