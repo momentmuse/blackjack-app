@@ -304,14 +304,16 @@ const printCardValues = (hand) => {
         }
         return cardValues.join(', ');
     } else {
-        return `Hand is empty!`;
+        return `Unknown`;
     }
 };
 
 let reactImages = [];
 
 const renderCardImages = (hand) => {
-    if (hand.length > 0) {
+    if (hand.length === 1) {
+        return [<img src={`${hand[0].src}`} className="card-img"/>, <img src={`images/cards/red_back.png`} className="card-img"/>];
+    } else if (hand.length > 0) {
         let cardImages = [];
         for (let i = 0; i < hand.length; i++) {
             cardImages.push(hand[i].src);
@@ -419,7 +421,7 @@ const playerRoot = document.getElementById('player');
 const renderApp = () => {
     const dealerTemplate = (
         <div>
-            <h1>{gameMessage}</h1>
+            <h2>{gameMessage}</h2>
             <button id="reset-button" className="button" onClick={resetGame}>Reshuffle</button>
             <button disabled={gameStatus==='playing' || gameStatus==='finished'} id="play-button" className="button" onClick={initiateGame}>Play?</button>
             
@@ -435,8 +437,8 @@ const renderApp = () => {
             <div className="card-images">{renderCardImages(playerHand)}</div>
             <p>Your Hand Values: {printCardValues(playerHand)}</p>
 
-            <button disabled={gameStatus==='finished'} id="hit-button" className="button" onClick={hitHand}>Hit!</button>
-            <button disabled={gameStatus==='finished'} id="stand-button" className="button" onClick={standHand}>Stand!</button>
+            <button disabled={gameStatus==='finished' || gameStatus==='ready' } id="hit-button" className="button" onClick={hitHand}>Hit!</button>
+            <button disabled={gameStatus==='finished' || gameStatus==='ready' } id="stand-button" className="button" onClick={standHand}>Stand!</button>
         </div>
     );
 

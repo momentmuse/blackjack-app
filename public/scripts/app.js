@@ -253,14 +253,16 @@ var printCardValues = function printCardValues(hand) {
         }
         return cardValues.join(', ');
     } else {
-        return 'Hand is empty!';
+        return 'Unknown';
     }
 };
 
 var reactImages = [];
 
 var renderCardImages = function renderCardImages(hand) {
-    if (hand.length > 0) {
+    if (hand.length === 1) {
+        return [React.createElement('img', { src: '' + hand[0].src, className: 'card-img' }), React.createElement('img', { src: 'images/cards/red_back.png', className: 'card-img' })];
+    } else if (hand.length > 0) {
         var cardImages = [];
         for (var i = 0; i < hand.length; i++) {
             cardImages.push(hand[i].src);
@@ -375,7 +377,7 @@ var renderApp = function renderApp() {
         'div',
         null,
         React.createElement(
-            'h1',
+            'h2',
             null,
             gameMessage
         ),
@@ -430,12 +432,12 @@ var renderApp = function renderApp() {
         ),
         React.createElement(
             'button',
-            { disabled: gameStatus === 'finished', id: 'hit-button', className: 'button', onClick: hitHand },
+            { disabled: gameStatus === 'finished' || gameStatus === 'ready', id: 'hit-button', className: 'button', onClick: hitHand },
             'Hit!'
         ),
         React.createElement(
             'button',
-            { disabled: gameStatus === 'finished', id: 'stand-button', className: 'button', onClick: standHand },
+            { disabled: gameStatus === 'finished' || gameStatus === 'ready', id: 'stand-button', className: 'button', onClick: standHand },
             'Stand!'
         )
     );
