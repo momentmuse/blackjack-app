@@ -245,38 +245,40 @@ var initiateGame = function initiateGame() {
 };
 
 var printCardValues = function printCardValues(hand) {
-    //only run if the user has clicked New Game, thus hand length is greater than 0
+    //only run if player has initiated game
     if (hand.length > 0) {
+        //create empty array for individual card values
         var cardValues = [];
+        //loop over hand array and push values into cardValues array
         for (var i = 0; i < hand.length; i++) {
             cardValues.push(hand[i].value);
         }
+        //return string of values joined by comma to render to DOM
         return cardValues.join(', ');
     } else {
         return 'Unknown';
     }
 };
 
-var reactImages = [];
-
 var renderCardImages = function renderCardImages(hand) {
+    //if hand length is 1 (ie. dealer at the beginning of the game), return array with first card face and card back
     if (hand.length === 1) {
         return [React.createElement('img', { src: '' + hand[0].src, className: 'card-img' }), React.createElement('img', { src: 'images/cards/red_back.png', className: 'card-img' })];
     } else if (hand.length > 0) {
+        //else if hand length is greater than 0, create empty cardImages array
         var cardImages = [];
+        //loop over hand and push image sources into cardImages array
         for (var i = 0; i < hand.length; i++) {
             cardImages.push(hand[i].src);
         }
-        reactImages = cardImages.map(function (imgSrc) {
+        //return new mapped array with each image source in image tag to render to DOM
+        return cardImages.map(function (imgSrc) {
             return React.createElement('img', { src: '' + imgSrc, className: 'card-img' });
         });
-        return reactImages;
     } else {
+        //all other cases, (before you start playing) return an array with two card backs
         return [React.createElement('img', { src: 'images/cards/red_back.png', className: 'card-img' }), React.createElement('img', { src: 'images/cards/red_back.png', className: 'card-img' })];
     }
-    //iterate over objects in the hand array and inject src img into JSX
-    //create an <img src=""></img> item that is pushed into JSX each time you addOneCard?
-    //remember to resize the images before you render them!
 };
 
 var calculateTotalValue = function calculateTotalValue(hand) {
