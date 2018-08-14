@@ -240,15 +240,14 @@ var initiateGame = function initiateGame() {
     renderApp();
 };
 
-var printCardsInHand = function printCardsInHand(hand) {
+var printCardValues = function printCardValues(hand) {
     //only run if the user has clicked New Game, thus hand length is greater than 0
     if (hand.length > 0) {
-        var cardsInHand = [];
+        var cardValues = [];
         for (var i = 0; i < hand.length; i++) {
-            cardsInHand.push(hand[i].card);
-            //change this line to return nested JSX elements to render directly to DOM
+            cardValues.push(hand[i].value);
         }
-        return cardsInHand;
+        return cardValues.join(', ');
     } else {
         return 'Hand is empty!';
     }
@@ -366,8 +365,6 @@ var standHand = function standHand() {
 var dealerRoot = document.getElementById('dealer');
 var playerRoot = document.getElementById('player');
 
-var testImg = React.createElement('img', { src: 'images/cards/2H.png', className: 'card-img' });
-
 //React JSX components
 var renderApp = function renderApp() {
     var dealerTemplate = React.createElement(
@@ -384,21 +381,21 @@ var renderApp = function renderApp() {
             'New Game'
         ),
         React.createElement(
+            'h2',
+            null,
+            'Total Value: ',
+            calculateTotalValue(dealerHand)
+        ),
+        React.createElement(
             'div',
             { className: 'card-images' },
             renderCardImages(dealerHand)
         ),
         React.createElement(
-            'h2',
-            null,
-            'Dealer Hand: ',
-            printCardsInHand(dealerHand)
-        ),
-        React.createElement(
             'p',
             null,
-            'Total Value: ',
-            calculateTotalValue(dealerHand)
+            'Dealer Hand: ',
+            printCardValues(dealerHand)
         )
     );
 
@@ -406,21 +403,21 @@ var renderApp = function renderApp() {
         'div',
         null,
         React.createElement(
+            'h2',
+            null,
+            'Total Value: ',
+            calculateTotalValue(playerHand)
+        ),
+        React.createElement(
             'div',
             { className: 'card-images' },
             renderCardImages(playerHand)
         ),
         React.createElement(
-            'h2',
-            null,
-            'Your Hand: ',
-            printCardsInHand(playerHand)
-        ),
-        React.createElement(
             'p',
             null,
-            'Total Value: ',
-            calculateTotalValue(playerHand)
+            'Your Hand: ',
+            printCardValues(playerHand)
         ),
         React.createElement(
             'button',
@@ -431,11 +428,6 @@ var renderApp = function renderApp() {
             'button',
             { disabled: gameStatus === 'finished', id: 'stand-button', className: 'button', onClick: standHand },
             'Stand!'
-        ),
-        React.createElement(
-            'div',
-            null,
-            testImg
         )
     );
 

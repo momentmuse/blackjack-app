@@ -291,15 +291,14 @@ const initiateGame = () => {
     renderApp();
 }
 
-const printCardsInHand = (hand) => {
+const printCardValues = (hand) => {
 //only run if the user has clicked New Game, thus hand length is greater than 0
     if (hand.length > 0) {
-        let cardsInHand = [];
+        let cardValues = [];
         for (let i = 0; i < hand.length; i++) {
-            cardsInHand.push(hand[i].card);
-        //change this line to return nested JSX elements to render directly to DOM
+            cardValues.push(hand[i].value);
         }
-        return cardsInHand;
+        return cardValues.join(', ');
     } else {
         return `Hand is empty!`;
     }
@@ -412,28 +411,26 @@ const standHand = () => {
 const dealerRoot = document.getElementById('dealer');
 const playerRoot = document.getElementById('player');
 
-const testImg = <img src='images/cards/2H.png' className="card-img"/>
-
 //React JSX components
 const renderApp = () => {
     const dealerTemplate = (
         <div>
             <h1>{gameMessage}</h1>
             <button id="play-button" className="button" onClick={initiateGame}>New Game</button>
+            <h2>Total Value: {calculateTotalValue(dealerHand)}</h2>
             <div className="card-images">{renderCardImages(dealerHand)}</div>
-            <h2>Dealer Hand: {printCardsInHand(dealerHand)}</h2>
-            <p>Total Value: {calculateTotalValue(dealerHand)}</p>
+            <p>Dealer Hand: {printCardValues(dealerHand)}</p>
         </div>
     );
 
     const playerTemplate = (
         <div>
+            <h2>Total Value: {calculateTotalValue(playerHand)}</h2>
             <div className="card-images">{renderCardImages(playerHand)}</div>
-            <h2>Your Hand: {printCardsInHand(playerHand)}</h2>
-            <p>Total Value: {calculateTotalValue(playerHand)}</p>
+            <p>Your Hand: {printCardValues(playerHand)}</p>
+
             <button disabled={gameStatus==='finished'} id="hit-button" className="button" onClick={hitHand}>Hit!</button>
             <button disabled={gameStatus==='finished'} id="stand-button" className="button" onClick={standHand}>Stand!</button>
-            <div>{testImg}</div>
         </div>
     );
 
