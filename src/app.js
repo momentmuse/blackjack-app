@@ -1,8 +1,8 @@
 console.log('the NEW app.js is running!')
 
 //declare game status and message and global variables
-let gameStatus = 'finished';
-let gameMessage = 'Click New Game to Start';
+let gameStatus = 'ready';
+let gameMessage = 'Click Play to Start';
 let deckValues = [];
 let dealerHand = [];
 let playerHand = [];
@@ -274,16 +274,20 @@ const refreshDeck = () => {
     ];
 };
 
-//initiateGame function to be run on New Game button click
-//changes message and status
-//resets many of the global values (in case you click it after playing a game)
-//set up dealer and player hands and renders app
-const initiateGame = () => {
-    gameStatus = 'playing';
-    gameMessage = 'Game in Progress';
+const resetGame = () => {
+    gameStatus = 'ready';
+    gameMessage = 'Click Play to Start';
+    
     deckValues = [];
     dealerHand = [];
     playerHand = [];
+    renderApp();
+}
+
+const initiateGame = () => {
+    gameStatus = 'playing';
+    gameMessage = 'Game in Progress';
+
     refreshDeck();
     addOneCard(playerHand);
     addOneCard(playerHand);
@@ -315,7 +319,7 @@ const renderCardImages = (hand) => {
         reactImages = cardImages.map(imgSrc => <img src={`${imgSrc}`} className="card-img"/>);
         return reactImages;
     } else {
-        return `No card images!`;
+        return [<img src={`images/cards/red_back.png`} className="card-img"/>, <img src={`images/cards/red_back.png`} className="card-img"/>];
     }
     //iterate over objects in the hand array and inject src img into JSX
     //create an <img src=""></img> item that is pushed into JSX each time you addOneCard?
@@ -416,10 +420,12 @@ const renderApp = () => {
     const dealerTemplate = (
         <div>
             <h1>{gameMessage}</h1>
-            <button id="play-button" className="button" onClick={initiateGame}>New Game</button>
+            <button id="reset-button" className="button" onClick={resetGame}>Reshuffle</button>
+            <button disabled={gameStatus==='playing' || gameStatus==='finished'} id="play-button" className="button" onClick={initiateGame}>Play?</button>
+            
             <h2>Total Value: {calculateTotalValue(dealerHand)}</h2>
             <div className="card-images">{renderCardImages(dealerHand)}</div>
-            <p>Dealer Hand: {printCardValues(dealerHand)}</p>
+            <p>Dealer Hand Values: {printCardValues(dealerHand)}</p>
         </div>
     );
 
@@ -427,7 +433,7 @@ const renderApp = () => {
         <div>
             <h2>Total Value: {calculateTotalValue(playerHand)}</h2>
             <div className="card-images">{renderCardImages(playerHand)}</div>
-            <p>Your Hand: {printCardValues(playerHand)}</p>
+            <p>Your Hand Values: {printCardValues(playerHand)}</p>
 
             <button disabled={gameStatus==='finished'} id="hit-button" className="button" onClick={hitHand}>Hit!</button>
             <button disabled={gameStatus==='finished'} id="stand-button" className="button" onClick={standHand}>Stand!</button>

@@ -3,8 +3,8 @@
 console.log('the NEW app.js is running!');
 
 //declare game status and message and global variables
-var gameStatus = 'finished';
-var gameMessage = 'Click New Game to Start';
+var gameStatus = 'ready';
+var gameMessage = 'Click Play to Start';
 var deckValues = [];
 var dealerHand = [];
 var playerHand = [];
@@ -223,16 +223,20 @@ var refreshDeck = function refreshDeck() {
     }];
 };
 
-//initiateGame function to be run on New Game button click
-//changes message and status
-//resets many of the global values (in case you click it after playing a game)
-//set up dealer and player hands and renders app
-var initiateGame = function initiateGame() {
-    gameStatus = 'playing';
-    gameMessage = 'Game in Progress';
+var resetGame = function resetGame() {
+    gameStatus = 'ready';
+    gameMessage = 'Click Play to Start';
+
     deckValues = [];
     dealerHand = [];
     playerHand = [];
+    renderApp();
+};
+
+var initiateGame = function initiateGame() {
+    gameStatus = 'playing';
+    gameMessage = 'Game in Progress';
+
     refreshDeck();
     addOneCard(playerHand);
     addOneCard(playerHand);
@@ -266,7 +270,7 @@ var renderCardImages = function renderCardImages(hand) {
         });
         return reactImages;
     } else {
-        return 'No card images!';
+        return [React.createElement('img', { src: 'images/cards/red_back.png', className: 'card-img' }), React.createElement('img', { src: 'images/cards/red_back.png', className: 'card-img' })];
     }
     //iterate over objects in the hand array and inject src img into JSX
     //create an <img src=""></img> item that is pushed into JSX each time you addOneCard?
@@ -377,8 +381,13 @@ var renderApp = function renderApp() {
         ),
         React.createElement(
             'button',
-            { id: 'play-button', className: 'button', onClick: initiateGame },
-            'New Game'
+            { id: 'reset-button', className: 'button', onClick: resetGame },
+            'Reshuffle'
+        ),
+        React.createElement(
+            'button',
+            { disabled: gameStatus === 'playing' || gameStatus === 'finished', id: 'play-button', className: 'button', onClick: initiateGame },
+            'Play?'
         ),
         React.createElement(
             'h2',
@@ -394,7 +403,7 @@ var renderApp = function renderApp() {
         React.createElement(
             'p',
             null,
-            'Dealer Hand: ',
+            'Dealer Hand Values: ',
             printCardValues(dealerHand)
         )
     );
@@ -416,7 +425,7 @@ var renderApp = function renderApp() {
         React.createElement(
             'p',
             null,
-            'Your Hand: ',
+            'Your Hand Values: ',
             printCardValues(playerHand)
         ),
         React.createElement(
