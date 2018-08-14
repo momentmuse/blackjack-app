@@ -431,9 +431,9 @@ const renderApp = () => {
             <button disabled={gameStatus==='playing' || gameStatus==='finished'} id="play-button" className="button" onClick={initiateGame}>Play?</button>
             
             <div className="card-div">
-                <h2>Total Value: {calculateTotalValue(dealerHand)}</h2>
+                <h2>Dealer Hand Total: {calculateTotalValue(dealerHand)}</h2>
                 {renderCardImages(dealerHand)}
-                <p>Dealer Hand Values: {printCardValues(dealerHand)}</p>
+                <p>Card Values: {printCardValues(dealerHand)}</p>
             </div>
           
         </div>
@@ -443,9 +443,9 @@ const renderApp = () => {
         <div>
 
             <div className="card-div">
-                <h2>Total Value: {calculateTotalValue(playerHand)}</h2>
+                <h2>Your Hand Total: {calculateTotalValue(playerHand)}</h2>
                 {renderCardImages(playerHand)}
-                <p>Your Hand Values: {printCardValues(playerHand)}</p>
+                <p>Card Values: {printCardValues(playerHand)}</p>
             </div>
 
             <button disabled={gameStatus==='finished' || gameStatus==='ready' } id="hit-button" className="button" onClick={hitHand}>Hit!</button>

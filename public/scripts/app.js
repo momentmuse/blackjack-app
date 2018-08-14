@@ -401,14 +401,14 @@ var renderApp = function renderApp() {
             React.createElement(
                 'h2',
                 null,
-                'Total Value: ',
+                'Dealer Hand Total: ',
                 calculateTotalValue(dealerHand)
             ),
             renderCardImages(dealerHand),
             React.createElement(
                 'p',
                 null,
-                'Dealer Hand Values: ',
+                'Card Values: ',
                 printCardValues(dealerHand)
             )
         )
@@ -423,14 +423,14 @@ var renderApp = function renderApp() {
             React.createElement(
                 'h2',
                 null,
-                'Total Value: ',
+                'Your Hand Total: ',
                 calculateTotalValue(playerHand)
             ),
             renderCardImages(playerHand),
             React.createElement(
                 'p',
                 null,
-                'Your Hand Values: ',
+                'Card Values: ',
                 printCardValues(playerHand)
             )
         ),
