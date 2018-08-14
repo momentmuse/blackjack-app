@@ -274,6 +274,7 @@ const refreshDeck = () => {
     ];
 };
 
+//resets game status, deckValues, and hands, to values on startup
 const resetGame = () => {
     gameStatus = 'ready';
     gameMessage = 'Click Play to Start';
@@ -284,6 +285,7 @@ const resetGame = () => {
     renderApp();
 }
 
+//initiates game, refreshes deckValues, and populates hands
 const initiateGame = () => {
     gameStatus = 'playing';
     gameMessage = 'Game in Progress';

@@ -223,6 +223,7 @@ var refreshDeck = function refreshDeck() {
     }];
 };
 
+//resets game status, deckValues, and hands, to values on startup
 var resetGame = function resetGame() {
     gameStatus = 'ready';
     gameMessage = 'Click Play to Start';
@@ -233,6 +234,7 @@ var resetGame = function resetGame() {
     renderApp();
 };
 
+//initiates game, refreshes deckValues, and populates hands
 var initiateGame = function initiateGame() {
     gameStatus = 'playing';
     gameMessage = 'Game in Progress';
