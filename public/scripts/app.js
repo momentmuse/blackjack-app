@@ -6,6 +6,8 @@ var gameMessage = 'Click Play to Start';
 var deckValues = [];
 var dealerHand = [];
 var playerHand = [];
+var dealerScore = 0;
+var playerScore = 0;
 
 //function to refresh the deck values after they have been spliced during a game
 //an array of 52 objects with three keys: card, value, and img src
@@ -324,11 +326,20 @@ var addOneCard = function addOneCard(hand) {
     checkAce(hand);
 };
 
+var dealerWin = function dealerWin() {
+    dealerScore++;
+};
+
+var playerWin = function playerWin() {
+    playerScore++;
+};
+
 var checkBust = function checkBust() {
     //conditional logic to check if pressing hit resulted in a bust, thereby finishing game
     if (calculateTotalValue(playerHand) > 21) {
         gameStatus = 'finished';
         gameMessage = ['Bust! You lose. ', React.createElement('i', { 'class': 'fas fa-sad-cry' })];
+        dealerWin();
     };
 };
 
@@ -338,9 +349,11 @@ var evaluateGameStatus = function evaluateGameStatus() {
     if (calculateTotalValue(dealerHand) > 21 || calculateTotalValue(dealerHand) < calculateTotalValue(playerHand)) {
         gameStatus = 'finished';
         gameMessage = [React.createElement('i', { 'class': 'fas fa-grin-stars' }), ' You win! Congrats! ', React.createElement('i', { 'class': 'fas fa-trophy' })];
+        playerWin();
     } else if (calculateTotalValue(dealerHand) > calculateTotalValue(playerHand)) {
         gameStatus = 'finished';
         gameMessage = ['You lose! ', React.createElement('i', { 'class': 'fas fa-sad-tear' })];
+        dealerWin();
     } else {
         gameStatus = 'finished';
         gameMessage = ['It\'s a draw! ', React.createElement('i', { 'class': 'fas fa-grin-tongue-wink' })];
@@ -379,6 +392,15 @@ var renderApp = function renderApp() {
     var dealerTemplate = React.createElement(
         'div',
         null,
+        React.createElement(
+            'h2',
+            null,
+            'dealer ',
+            dealerScore,
+            ' : ',
+            playerScore,
+            ' you'
+        ),
         React.createElement(
             'div',
             { className: 'ui' },

@@ -4,6 +4,8 @@ let gameMessage = 'Click Play to Start';
 let deckValues = [];
 let dealerHand = [];
 let playerHand = [];
+let dealerScore = 0;
+let playerScore = 0;
 
 //function to refresh the deck values after they have been spliced during a game
 //an array of 52 objects with three keys: card, value, and img src
@@ -369,11 +371,20 @@ const addOneCard = (hand) => {
     checkAce(hand);
 };
 
+const dealerWin = () => {
+    dealerScore++;
+};
+
+const playerWin = () => {
+    playerScore++;
+}
+
 const checkBust = () => {
 //conditional logic to check if pressing hit resulted in a bust, thereby finishing game
     if (calculateTotalValue(playerHand) > 21) {
         gameStatus = 'finished';
         gameMessage = ['Bust! You lose. ', <i class="fas fa-sad-cry"></i>];
+        dealerWin();
     };
 };
 
@@ -383,9 +394,11 @@ const evaluateGameStatus = () => {
     if (calculateTotalValue(dealerHand) > 21 || calculateTotalValue(dealerHand) < calculateTotalValue(playerHand)) {
         gameStatus = 'finished';
         gameMessage = [<i class="fas fa-grin-stars"></i>, ' You win! Congrats! ', <i class="fas fa-trophy"></i>];
+        playerWin();
     } else if (calculateTotalValue(dealerHand) > calculateTotalValue(playerHand)) {
         gameStatus = 'finished';
         gameMessage = ['You lose! ', <i class="fas fa-sad-tear"></i>];
+        dealerWin();
     } else {
         gameStatus = 'finished';
         gameMessage = ['It\'s a draw! ', <i class="fas fa-grin-tongue-wink"></i>];
@@ -425,6 +438,7 @@ const renderApp = () => {
     const dealerTemplate = (
         <div>
 
+            <h2>dealer {dealerScore} : {playerScore} you</h2>
             <div className="ui">
                 <h1>{gameMessage}</h1>
                 <button className="button" onClick={resetGame}>Reshuffle</button>
