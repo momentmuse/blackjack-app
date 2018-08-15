@@ -359,16 +359,17 @@ var hitHand = function hitHand() {
 };
 
 var standHand = function standHand() {
-    //while the value of dealer hand is <=16, dealer continues adding cards to hand
-    //also while dealer has an ace and total value is >=17 and <21, dealer must stand
-    while (calculateTotalValue(dealerHand) <= 16 || calculateTotalValue(dealerHand) < 21 && dealerHand.findIndex(isThereAnAce) >= 0) {
+    //recursive function runs standHand again if dealer hand is <=16 or <21 and contains and ace
+    if (calculateTotalValue(dealerHand) <= 16 || calculateTotalValue(dealerHand) < 21 && dealerHand.findIndex(isThereAnAce) >= 0) {
         addOneCard(dealerHand);
-        //add time delay betwen each addOneCard?
-        //setInterval and setTimeout doesn't work
+        renderApp();
+        //timeout to wait one second between adding cards
+        setTimeout(standHand, 1000);
+    } else {
+        //after dealerHand does not satisfy conditionals, it evaluates the game status and renders app again
+        evaluateGameStatus();
+        renderApp();
     }
-    //evaluate game status and render app when while loop ceases
-    evaluateGameStatus();
-    renderApp();
 };
 
 //declaring root to attach JSX components
