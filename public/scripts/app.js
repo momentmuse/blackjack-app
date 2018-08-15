@@ -381,19 +381,23 @@ var renderApp = function renderApp() {
         'div',
         null,
         React.createElement(
-            'h2',
-            null,
-            gameMessage
-        ),
-        React.createElement(
-            'button',
-            { id: 'reset-button', className: 'button', onClick: resetGame },
-            'Reshuffle'
-        ),
-        React.createElement(
-            'button',
-            { disabled: gameStatus === 'playing' || gameStatus === 'finished', id: 'play-button', className: 'button', onClick: initiateGame },
-            'Play?'
+            'div',
+            { className: 'ui' },
+            React.createElement(
+                'h1',
+                null,
+                gameMessage
+            ),
+            React.createElement(
+                'button',
+                { className: 'button', onClick: resetGame },
+                'Reshuffle'
+            ),
+            React.createElement(
+                'button',
+                { disabled: gameStatus === 'playing' || gameStatus === 'finished', className: 'button', onClick: initiateGame },
+                'Play?'
+            )
         ),
         React.createElement(
             'div',
@@ -435,14 +439,18 @@ var renderApp = function renderApp() {
             )
         ),
         React.createElement(
-            'button',
-            { disabled: gameStatus === 'finished' || gameStatus === 'ready', id: 'hit-button', className: 'button', onClick: hitHand },
-            'Hit!'
-        ),
-        React.createElement(
-            'button',
-            { disabled: gameStatus === 'finished' || gameStatus === 'ready', id: 'stand-button', className: 'button', onClick: standHand },
-            'Stand!'
+            'div',
+            { className: 'ui' },
+            React.createElement(
+                'button',
+                { disabled: gameStatus === 'finished' || gameStatus === 'ready', className: 'button', onClick: hitHand },
+                'Hit!'
+            ),
+            React.createElement(
+                'button',
+                { disabled: gameStatus === 'finished' || gameStatus === 'ready', className: 'button', onClick: standHand },
+                'Stand!'
+            )
         )
     );
 

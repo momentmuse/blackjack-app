@@ -426,9 +426,11 @@ const renderApp = () => {
     const dealerTemplate = (
         <div>
 
-            <h2>{gameMessage}</h2>
-            <button id="reset-button" className="button" onClick={resetGame}>Reshuffle</button>
-            <button disabled={gameStatus==='playing' || gameStatus==='finished'} id="play-button" className="button" onClick={initiateGame}>Play?</button>
+            <div className="ui">
+                <h1>{gameMessage}</h1>
+                <button className="button" onClick={resetGame}>Reshuffle</button>
+                <button disabled={gameStatus==='playing' || gameStatus==='finished'} className="button" onClick={initiateGame}>Play?</button>
+            </div>
             
             <div className="card-div">
                 <h2>Dealer Hand Total: {calculateTotalValue(dealerHand)}</h2>
@@ -448,8 +450,10 @@ const renderApp = () => {
                 <p>Card Values: {printCardValues(playerHand)}</p>
             </div>
 
-            <button disabled={gameStatus==='finished' || gameStatus==='ready' } id="hit-button" className="button" onClick={hitHand}>Hit!</button>
-            <button disabled={gameStatus==='finished' || gameStatus==='ready' } id="stand-button" className="button" onClick={standHand}>Stand!</button>
+            <div className="ui">
+                <button disabled={gameStatus==='finished' || gameStatus==='ready' } className="button" onClick={hitHand}>Hit!</button>
+                <button disabled={gameStatus==='finished' || gameStatus==='ready' } className="button" onClick={standHand}>Stand!</button>
+            </div>
 
         </div>
     );
