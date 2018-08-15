@@ -1,5 +1,3 @@
-console.log('the NEW app.js is running!')
-
 //declare game status and message and global variables
 let gameStatus = 'ready';
 let gameMessage = 'Click Play to Start';

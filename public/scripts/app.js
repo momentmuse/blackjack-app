@@ -1,7 +1,5 @@
 'use strict';
 
-console.log('the NEW app.js is running!');
-
 //declare game status and message and global variables
 var gameStatus = 'ready';
 var gameMessage = 'Click Play to Start';
