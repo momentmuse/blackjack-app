@@ -373,7 +373,7 @@ const checkBust = () => {
 //conditional logic to check if pressing hit resulted in a bust, thereby finishing game
     if (calculateTotalValue(playerHand) > 21) {
         gameStatus = 'finished';
-        gameMessage = 'Bust! You lose.'
+        gameMessage = ['Bust! You lose. ', <i class="fas fa-sad-cry"></i>];
     };
 };
 
@@ -382,13 +382,13 @@ const evaluateGameStatus = () => {
 //finishes the game and reassigns game message
     if (calculateTotalValue(dealerHand) > 21 || calculateTotalValue(dealerHand) < calculateTotalValue(playerHand)) {
         gameStatus = 'finished';
-        gameMessage = 'You win! Congratulations!';
+        gameMessage = [<i class="fas fa-grin-stars"></i>, ' You win! Congrats! ', <i class="fas fa-trophy"></i>];
     } else if (calculateTotalValue(dealerHand) > calculateTotalValue(playerHand)) {
         gameStatus = 'finished';
-        gameMessage = 'You lose!';
+        gameMessage = ['You lose! ', <i class="fas fa-sad-tear"></i>];
     } else {
         gameStatus = 'finished';
-        gameMessage = 'It\'s a draw!';
+        gameMessage = ['It\'s a draw! ', <i class="fas fa-grin-tongue-wink"></i>];
     }
 };
 

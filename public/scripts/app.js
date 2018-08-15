@@ -328,7 +328,7 @@ var checkBust = function checkBust() {
     //conditional logic to check if pressing hit resulted in a bust, thereby finishing game
     if (calculateTotalValue(playerHand) > 21) {
         gameStatus = 'finished';
-        gameMessage = 'Bust! You lose.';
+        gameMessage = ['Bust! You lose. ', React.createElement('i', { 'class': 'fas fa-sad-cry' })];
     };
 };
 
@@ -337,13 +337,13 @@ var evaluateGameStatus = function evaluateGameStatus() {
     //finishes the game and reassigns game message
     if (calculateTotalValue(dealerHand) > 21 || calculateTotalValue(dealerHand) < calculateTotalValue(playerHand)) {
         gameStatus = 'finished';
-        gameMessage = 'You win! Congratulations!';
+        gameMessage = [React.createElement('i', { 'class': 'fas fa-grin-stars' }), ' You win! Congrats! ', React.createElement('i', { 'class': 'fas fa-trophy' })];
     } else if (calculateTotalValue(dealerHand) > calculateTotalValue(playerHand)) {
         gameStatus = 'finished';
-        gameMessage = 'You lose!';
+        gameMessage = ['You lose! ', React.createElement('i', { 'class': 'fas fa-sad-tear' })];
     } else {
         gameStatus = 'finished';
-        gameMessage = 'It\'s a draw!';
+        gameMessage = ['It\'s a draw! ', React.createElement('i', { 'class': 'fas fa-grin-tongue-wink' })];
     }
 };
 
