@@ -256,7 +256,7 @@ var printCardValues = function printCardValues(hand) {
         //return string of values joined by comma to render to DOM
         return cardValues.join(', ');
     } else {
-        return 'Unknown';
+        return '?';
     }
 };
 
@@ -295,7 +295,7 @@ var calculateTotalValue = function calculateTotalValue(hand) {
         });
         //else (if length of hand is !>0), return 0
     } else {
-        return 0;
+        return '?';
     }
 };
 

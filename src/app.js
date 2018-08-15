@@ -307,7 +307,7 @@ const printCardValues = (hand) => {
 //return string of values joined by comma to render to DOM
         return cardValues.join(', ');
     } else {
-        return `Unknown`;
+        return '?';
     }
 };
 
@@ -342,7 +342,7 @@ const calculateTotalValue = (hand) => {
         return valuesOfHand.reduce((a,b) => a+b);
 //else (if length of hand is !>0), return 0
     } else {
-        return 0;
+        return '?';
     }
 };
 
