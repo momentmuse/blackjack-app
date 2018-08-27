@@ -8,7 +8,8 @@ let dealerScore = 0;
 let playerScore = 0;
 
 //function to refresh the deck values after they have been spliced during a game
-//an array of 52 objects with three keys: card, value, and img src
+//use map to dynamically generate deck array (much shorter than hard coding)
+//an array of 52 objects with two keys: value and img src
 
 const refreshDeck = () => {
     return [
